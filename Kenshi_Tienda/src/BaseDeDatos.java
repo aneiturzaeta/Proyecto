@@ -14,8 +14,7 @@ public class BaseDeDatos {
 	
 	
 	//GENÉRICO
-	
-	
+		
 	private static Connection connection = null;
 	private static Statement statement = null;
 
