@@ -6,6 +6,7 @@ import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -61,6 +62,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 	private JButton BSalir;
 	private JButton BEmail;
 	private JButton BMenu;
+	private JButton BLogOut;
 	
 	private JTextArea K, E, N, S, H , I;
 	private JTextArea informacion;
@@ -129,14 +131,22 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		BEmail.setContentAreaFilled(false);
 		BEmail.setBorderPainted(false);
 		
-		BSalir = new JButton("Salir"); //añadimos un boton
+		BSalir = new JButton(new ImageIcon(frmPrincipal.class.getResource("img/salir.png"))); //añadimos un boton
 		BSalir.setFont(new Font("Century Gothic", Font.BOLD, 12));
-//		BSalir.setBounds(100, 103, 150, 30);
 		BSalir.addActionListener(this);
 		BSalir.setActionCommand("Salir");
 		BSalir.setOpaque(false);
 		BSalir.setContentAreaFilled(false);
 		BSalir.setBorderPainted(false);
+		
+		
+		BLogOut = new JButton("Log out"); //añadimos un boton
+		BLogOut.setFont(new Font("Century Gothic", Font.BOLD, 12));
+		BLogOut.addActionListener(this);
+		BLogOut.setActionCommand("Logout");
+		BLogOut.setOpaque(false);
+		BLogOut.setContentAreaFilled(false);
+		BLogOut.setBorderPainted(false);		
 		
 		
 		K = new JTextArea();
@@ -183,7 +193,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		
 		
 		informacion = new JTextArea();
-		informacion.setText("   Ane Iturzaeta aneiturzaeta@opendeusto.es y Leire Jauregi leire.jauregi@opendeusto.es,          Programacion III, ADE + II, Deusto");
+		informacion.setText("       Ane Iturzaeta aneiturzaeta@opendeusto.es y Leire Jauregi leire.jauregi@opendeusto.es,                  Programacion III, ADE + II, Deusto");
 		informacion.setForeground(new Color(0, 0, 0));
 		informacion.setFont(new Font("Century Gothic", Font.BOLD, 12));
 		informacion.setEnabled(false);
@@ -202,7 +212,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		setTitle("KENSHI - HAZ TU COMPRA AQUI");
 		setLocationRelativeTo( null );  // Centra la ventana en la pantalla
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
-		setBounds(250, 50, 850, 600);
+		setBounds(250, 50, 880, 600); 
 		//PanelSuperior.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(new BorderLayout());
 		
@@ -213,6 +223,8 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		PanelSuperior.setBackground(Color.GRAY);
 							
 		this.add(PanelSuperior, BorderLayout.NORTH);
+		
+		PanelSuperior.add(BSalir);
 		PanelSuperior.add(BMenu);
 		PanelSuperior.add(BAdmin);
 		PanelSuperior.add(BEmail);
@@ -225,7 +237,8 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		PanelSuperior.add(Bcarro);
 		PanelSuperior.add(BRegistro);
 		PanelSuperior.add(BEntrar);
-		PanelSuperior.add(BSalir);
+		PanelSuperior.add(BLogOut);
+		
 		
 		
 		
@@ -278,11 +291,14 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			panelAdmin.setPreferredSize( new Dimension( 400,500 ) );
 			panelAdmin.setBackground(SystemColor.activeCaption);
 			this.add(panelAdmin, BorderLayout.WEST);
+			
 				
 					
 			panelAdminExtra.setPreferredSize( new Dimension( 400,500 ) );
 			panelAdminExtra.setBackground(SystemColor.activeCaption);
 			this.add(panelAdminExtra, BorderLayout.EAST);
+			
+				
 			
 			panelAdminExtra.setVisible(true);
 			panelAdmin.setVisible(true);
@@ -426,6 +442,12 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			this.setVisible(false);
 			break;
 			
+			
+		case "Logout":
+			
+			JOptionPane.showMessageDialog(this, "Sesión cerrada");
+			
+		
 		}
 	}
 

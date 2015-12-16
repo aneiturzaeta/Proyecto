@@ -14,6 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+//mail
+
+
+
+
 public class PanelContacto extends JPanel implements ActionListener{
 	
 	private JLabel textAsunto;
@@ -89,11 +94,8 @@ public class PanelContacto extends JPanel implements ActionListener{
 					
 					comprobarCuerpo (cuerpo);
 				
-				//	PanelGestionContacto panelGestionCont = new PanelGestionContacto ();
-					//panelGestionCont.setPreferredSize( new Dimension( 800,125 ) );
-					//panelGestionCont.setBackground(SystemColor.activeCaption);
-					//this.add(panelGestionCont, BorderLayout.CENTER);
-				
+					 	
+					//mandar email
 					
 					//JOptionPane.showInputDialog("Entrado bien");
 				}

@@ -62,7 +62,8 @@ public class BaseDeDatos {
 	}
 	
 	
-	
+	//ikusteko ea ya tabla existitzen dan
+	//query --> select * from persona ta si da error --> eongo da sortuta
 	
 	
 	
@@ -74,31 +75,68 @@ public class BaseDeDatos {
 		try {
 			statement.executeUpdate
 			
-					("create table cliente (nombreusuario string, nombreapellido string, ciudad string, email string, contraseña string)" +
+					("create table if not exists cliente (nombreusuario text, nombreapellido text, ciudad string, email string, contraseña string)" +
 							
-					"create table pedido (numeropedido number, fecha date)"+
+					"create table if not exists pedido (numeropedido integer, fecha date, nombreusuario text)"+
 					
-					"create table pedido_producto (cantidad number, fecha date, numeropedido number, codigoproducto numero)" +
+					"create table if not exists pedido_producto (cantidad text, fecha date, numeropedido integer, codigoproducto integer)" +
 					
-					"create table producto (codigoproducto number, nombre string, descripcion string)" +
+					"create table if not exists producto (codigoproducto integer, nombre text, descripcion text)" +
 					
-					"create table tipoproducto (codigotipo number, nombre string, descripcion)" 
+					"create table if not exists tipoproducto (codigotipo integer, nombre text, descripcion text)" 
 					
 					);
 		} catch (SQLException e) {
 			// Si hay excepción es que la tabla ya existía (lo cual es correcto)
-			// e.printStackTrace();  
+			e.printStackTrace();  
 		}
+	}
+	
+	
+	public static void inicializarValores(){
+		
+		
+		//ponemos unos datos de prueba. pero antes probamos que los datos no estén
+		
+		
 	}
 	
 	
 	//GESTION DE NUESTRA BASE DE DATOS
 	
 	
+	public void insertarCliente (Cliente cliente){
+		
+		
+		String nombreUsuario = cliente.getNombreusuario();
+		String nombre = cliente.getNombreapellido();
+		String ciudad = cliente.getCiudad();
+		String email = cliente.getEmail();
+		String contra = cliente.getContraseña();
+		
+		
+		
+		//final String sent = "insert into cliente "
+		
+		
+	}
+	
+	
+	public void insertarProducto (Producto producto) { //puede ser ropa o complemento
+		
+		
+		
+	}
 	
 	
 	
-	
+	public void insertarPedido (Pedido pedido){
+		
+		
+		
+		
+		
+	}
 	
 	
 }

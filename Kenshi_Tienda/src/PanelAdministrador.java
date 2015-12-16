@@ -22,6 +22,9 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 	private JLabel textPassAdmin;
 	private JButton BAdminEntrar;
 
+	private int fallos = 0;
+	private int maxFallos = 3;
+		
 	/**
 	 * Create the panel.
 	 */
@@ -29,7 +32,7 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 		setLayout(null);
 		
 		passAdmin = new JPasswordField();
-		passAdmin.setFont(new Font("Century Gothic", Font.BOLD, 50));
+		passAdmin.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		passAdmin.setBounds(94, 159, 231, 20);
 		passAdmin.setEnabled(true);
 		passAdmin.setEditable(true);
@@ -54,6 +57,8 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 		BAdminEntrar.setBorderPainted(false);
 		add(BAdminEntrar);
 		
+			
+		
 	}
 
 	@Override
@@ -65,36 +70,55 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 			case "Entrar":
 				
 				String contra = passAdmin.getText();
-				
+								
 								
 			try {
 				
 				comprobarContra (contra);
 			
-				PanelGestionAdministrador panelGestionAdmin = new PanelGestionAdministrador ();
+				fallos = 0;
+				
+				this.setVisible(false);
+				
+				
+				
+				/*PanelGestionAdministrador panelGestionAdmin = new PanelGestionAdministrador ();
 				panelGestionAdmin.setPreferredSize( new Dimension( 800,125 ) );
 				panelGestionAdmin.setBackground(SystemColor.activeCaption);
-				this.add(panelGestionAdmin, BorderLayout.CENTER);
+				ventanaPrincipal.add(panelGestionAdmin, BorderLayout.CENTER);*/
 			
+						
 				
-				//JOptionPane.showInputDialog("Entrado bien");
 			}
 				
 			catch (ExcepAdminKo e1) {
 			
+					fallos ++;
+				
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(this, e1.Informar());
+					JOptionPane.showMessageDialog(this, e1.Informar(maxFallos, fallos));
+					
+					if (fallos == maxFallos){
+						
+							
+					this.remove(passAdmin);
+					this.remove(textPassAdmin);
+					this.remove(BAdminEntrar);
+							
+					this.repaint();
+						
+					}
+					
+					passAdmin.setText("");
+					passAdmin.repaint();
 			}
 					
 			break;	
 			}
-					
+				
 				
 	}
-				
-				
-				
-	
+					
 
 	private void comprobarContra(String contra) throws ExcepAdminKo {
 		// TODO Auto-generated method stub
@@ -105,9 +129,11 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 			throw new ExcepAdminKo();
 			
 		}
-	//	else ()
+	
 		
-	}		
+	}
+
+	
 			
 		
 		
