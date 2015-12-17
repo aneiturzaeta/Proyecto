@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.sql.Connection;
 
 
 public class frmPrincipal extends JFrame implements ActionListener{
@@ -24,6 +25,10 @@ public class frmPrincipal extends JFrame implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 7046431761927583577L;
+	
+	//NUESTRA BASE DE DATOS
+	static BaseDeDatos BD;
+	
 	
 	//private PanelImagen conImagen;
 	
@@ -456,6 +461,13 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		
 		frmPrincipal objPrincipal = new frmPrincipal ();
 		objPrincipal.setVisible(true);
+	
+		
+		BD = new BaseDeDatos();
+		
+		BD.initBD("Kenshi");
+		BD.crearTablaBD();
+		BD.inicializarValores();
 	}
 
 }

@@ -62,10 +62,6 @@ public class BaseDeDatos {
 	}
 	
 	
-	//ikusteko ea ya tabla existitzen dan
-	//query --> select * from persona ta si da error --> eongo da sortuta
-	
-	
 	
 	
 	//CREACION DE NUESTRA BASE DE DATOS
@@ -77,7 +73,7 @@ public class BaseDeDatos {
 			
 					("create table if not exists cliente (nombreusuario text, nombreapellido text, ciudad string, email string, contraseña string)" +
 							
-					"create table if not exists pedido (numeropedido integer, fecha date, nombreusuario text)"+
+					"create table if not exists pedido (numeropedido integer, fecha date, codigo integer, nombreusuario text)"+
 					
 					"create table if not exists pedido_producto (cantidad text, fecha date, numeropedido integer, codigoproducto integer)" +
 					
@@ -116,7 +112,7 @@ public class BaseDeDatos {
 		
 		
 		
-		//final String sent = "insert into cliente "
+		//final String sent = "insert into cliente values nombreusuario, nombre, ciudad, email, contra";
 		
 		
 	}

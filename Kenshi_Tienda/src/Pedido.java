@@ -6,17 +6,17 @@ public class Pedido {
 	
 	private int numeroPedido;
 	private Date fecha;
-	private int pedido_cant;
+	private int codigo;
 	private String nombreusuario;
 	
 	
 	
-	public Pedido(int numeroPedido, Date fecha, int pedido_cant,
+	public Pedido(int numeroPedido, Date fecha, int codigo,
 			String nombreusuario) {
 		super();
 		this.numeroPedido = numeroPedido;
 		this.fecha = fecha;
-		this.pedido_cant = pedido_cant;
+		this.codigo = codigo;
 		this.nombreusuario = nombreusuario;
 	}
 
@@ -46,14 +46,14 @@ public class Pedido {
 
 
 
-	public int getPedido_cant() {
-		return pedido_cant;
+	public int getCodigo() {
+		return codigo;
 	}
 
 
 
-	public void setPedido_cant(int pedido_cant) {
-		this.pedido_cant = pedido_cant;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 

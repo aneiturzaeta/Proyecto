@@ -9,9 +9,7 @@ public class Producto {
 	private int existencias;
 	private int tipoProducto;
 	
-	
-	
-	
+		
 
 	public Producto() {
 		super();

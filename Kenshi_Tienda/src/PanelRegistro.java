@@ -130,14 +130,32 @@ setLayout(null);
 			
 			comprobarUsuario (usuario);
 		
-		//	PanelGestionContacto panelGestionCont = new PanelGestionContacto ();
-			//panelGestionCont.setPreferredSize( new Dimension( 800,125 ) );
-			//panelGestionCont.setBackground(SystemColor.activeCaption);
-			//this.add(panelGestionCont, BorderLayout.CENTER);
-		
+//			LLamada a BD
+//			int numeroUsuarios = numeroUsuarios(); 
+				
+//			for (int i= 0; i<numeroUsuarios; i++){
+//				
+//				if (nombre.equalsTo(comprobarNombreUsuario(i))){
+//					
+//					JOptionPane.showMessageDialog(this, "Ya existe ese nombre de usuario");
+//					
 			
-			//JOptionPane.showInputDialog("Entrado bien");
-		}
+//				}
+				
+				
+//			else 
+			
+//			insertar el usuario a la BD
+//			usuarioNuevo(usuario);
+				
+//			JOptionPane.showInputDialog("Entrado bien");
+			
+			
+			}
+			
+			
+			
+		
 			
 		catch (ExcepUsuario e1) {
 		
