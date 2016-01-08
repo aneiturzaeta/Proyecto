@@ -25,6 +25,8 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 	private int fallos = 0;
 	private int maxFallos = 3;
 		
+	private Cliente sesion;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -132,6 +134,14 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 	
 		
 	}
+	
+	public void sesion(Cliente sesion) {
+		
+		
+		this.sesion = sesion;
+	
+	}
+	
 
 	
 			

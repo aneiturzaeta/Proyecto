@@ -16,9 +16,14 @@ public class PanelCarro extends JPanel implements ActionListener{
 
 	
 	private JTable table;
-	private JLabel textComplemento; 
+	private JLabel textComplemento;
+	
+	private JButton bBorrar;
 	
 	 
+	private Cliente sesion;
+	
+	
 	public PanelCarro (){
 			
 			setBackground(SystemColor.activeCaption);
@@ -36,13 +41,43 @@ public class PanelCarro extends JPanel implements ActionListener{
 			textComplemento.setBounds(60, 23, 280, 20);
 			add(textComplemento);
 			
-	
+			bBorrar = new JButton("Borrar pedidos");
+			bBorrar.setSize(100, 32);
+			bBorrar.setLocation(156, 380);
+			bBorrar.setFont(new Font("Century Gothic", Font.BOLD, 16));
+			bBorrar.addActionListener(this);
+			bBorrar.setActionCommand("Borrar");
+			bBorrar.setContentAreaFilled(false);
+			bBorrar.setBorderPainted(false);
+			add(bBorrar);
 	
 		}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+		switch(e.getActionCommand()){
+		
+		case "Borrar":
+			
+			
+			BaseDeDatos.borrarPedidos(sesion);
+			
+			
+			
+			break;
+		
+		}
+		
+		
+	}
+	
+	
+	public void sesion(Cliente sesion) {
+	
+	
+		this.sesion = sesion;
+	
 	}
 
 }

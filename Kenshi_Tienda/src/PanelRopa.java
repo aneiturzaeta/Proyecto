@@ -5,18 +5,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.SystemColor;
 
-import javax.swing.border.LineBorder;
-import javax.swing.table.AbstractTableModel;
 
 import java.awt.Color;
 
-import javax.swing.JTextField;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,14 +41,14 @@ public class PanelRopa extends JPanel implements ActionListener {
 	private JLabel textRopa;
 	private JButton Añadir;
 	
+	private Cliente sesion;
+	
 	/**
 	 * Create the panel.
 	 */
 	public PanelRopa() {
 		
 		setBackground(SystemColor.activeCaption);
-		setLayout(null);
-		
 		
 		String[] columnas = {"Codigo","Nombre", "Descripcion", "Precio",  "Talla", "Material", "Estilo"};
 	
@@ -65,15 +67,17 @@ public class PanelRopa extends JPanel implements ActionListener {
 			
 						
 		table = new JTable(datos, columnas);
-		table.setBounds(20, 65, 420, 64);
-		
-		//JScrollPane tableContainer = new JScrollPane(table);
-		//this.add(tableContainer, BorderLayout.CENTER);
+		table.setBounds(31, 97, 389, 64);
 		
 		table.getColumn("Codigo").setPreferredWidth(25);
 		table.getColumn("Precio").setPreferredWidth(35);
 		table.getColumn("Talla").setPreferredWidth(20);
+		setLayout(null);
 		
+//		JScrollPane tableContainer = new JScrollPane(table);
+//
+//		this.add(tableContainer, BorderLayout.CENTER);
+					
 		
 //		table.setEnabled(false);
 
@@ -81,7 +85,9 @@ public class PanelRopa extends JPanel implements ActionListener {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);				
 		this.add(table);
 		
-	
+//		this.add(tableContainer);
+		
+		
 		
 		textRopa = new JLabel();
 		textRopa.setFont(new Font("Bradley Hand ITC", Font.BOLD, 25));
@@ -90,25 +96,53 @@ public class PanelRopa extends JPanel implements ActionListener {
 		textRopa.setBounds(148, 22, 181, 20);
 		add(textRopa);
 		
-		Añadir = new JButton("A\u00F1adir Producto");
-		Añadir.setBounds(169, 160, 110, 23);
+		Añadir = new JButton("Añadir Producto");
+		Añadir.setBounds(0, 187, 450, 49);
+		Añadir.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		Añadir.setContentAreaFilled(false);
+		Añadir.setBorderPainted(false);
 		Añadir.addActionListener(this);
 		Añadir.setActionCommand("Añadir");
 		add(Añadir);
+		
+//		BSalir.setBounds(100, 103, 150, 30);
 	
 		
 		
+	
+	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	
+	
+	table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+	
+		@Override
+	    public void valueChanged(ListSelectionEvent event) {
+	        if (table.getSelectedRow() > -1) {
+	            	           
+	        	//codigo producto
+	        	String codigoSeleccion = table.getValueAt(table.getSelectedRow(), 0).toString(); //imprime el codigo del producto seleccionado
+	            System.out.println(codigoSeleccion);
+	        	
+	            //nombreusuario
+	            
+	            String nombreusuario = sesion.getNombreusuario();
+	            
+	            
+	            //fecha
+	            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	            Date fechaDate = Calendar.getInstance().getTime();        
+	            String fecha = df.format(fechaDate);
+	            
+	                        
+	            
+	            BaseDeDatos.insertarPedido(codigoSeleccion, nombreusuario, fecha);
+	            
+	            
+	        }
+	    }
+	});
+	
 	}
-//	table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-//	
-//		@Override
-//	    public void valueChanged(ListSelectionEvent event) {
-//	        if (table.getSelectedRow() > -1) {
-//	            // print first column value from selected row
-//	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-//	        }
-//	    }
-//	});
 
 	
 			
@@ -139,8 +173,7 @@ public class PanelRopa extends JPanel implements ActionListener {
 		
 			case "Añadir":
 				
-				añadir(0, "añadir");
-				
+						
 				JOptionPane.showMessageDialog(this, "No se ha seleccionado ningun producto");
 				
 								
@@ -158,42 +191,12 @@ public class PanelRopa extends JPanel implements ActionListener {
 	
 	
 	
-	public void añadir (int fila, String etiqueta){
-		
-		int filaSele;
-		boolean añadir = false;
-		
-		switch (etiqueta){
-		
-			case "Añadir": añadir = true; break;
-						
-			case "Fila": filaSele = fila; break;
-		
-		}
+	public void sesion(Cliente sesion) {
 		
 		
-		Date fecha = new Date();
-				
-		Random r= new Random(33);
-				
-		int numeroPedido = r.nextInt(10000);
-		
-		int codigo = 0; //el codigo del producto;
-		
-		String usuario="5"; //el nombre de usuario
-		
-//		Pedido nuevo = new Pedido(numeroPedido, fecha, codigo, usuario);
-		
+		this.sesion = sesion;
 	
-		
-//		llamar a base de datos
-//		insertarReserva(nuevo);
-		
-		
 	}
-	
-	
-	
 	
 	
 	  public boolean isCellEditable(int row, int column) {

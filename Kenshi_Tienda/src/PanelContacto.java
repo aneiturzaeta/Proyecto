@@ -18,7 +18,9 @@ import javax.swing.JTextField;
 
 //mail
 
+
 import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -36,6 +38,7 @@ public class PanelContacto extends JPanel implements ActionListener{
 	private JLabel textCuerpo;
 	private JButton BEnviar;
 	
+	private Cliente sesion;
 	
 //	mail
 //	http://crunchify.com/java-mailapi-example-send-an-email-via-gmail-smtp/
@@ -108,7 +111,9 @@ public class PanelContacto extends JPanel implements ActionListener{
 				String cuerpo = Cuerpo.getText();
 				String asunto = Asunto.getText();
 				
+				
 				//se enviara el email
+				
 				try {
 					
 					comprobarCuerpo (cuerpo);
@@ -135,7 +140,7 @@ public class PanelContacto extends JPanel implements ActionListener{
 					e1.printStackTrace();
 				}
 						
-				
+					
 			
 			break;
 		
@@ -176,7 +181,29 @@ public class PanelContacto extends JPanel implements ActionListener{
 			generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress("aneiturzaeta@gmail.com"));
 //			generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("test2@crunchify.com"));
 			generateMailMessage.setSubject(asunto);
-			String emailBody = cuerpo + "\n \n \n Este email esta mandado por la aplicacion de Ane y Leire";
+			
+			String nombreUsuario;
+			String email;
+			
+			if (sesion.getNombreusuario()!= null && !sesion.getNombreusuario().isEmpty()){
+				
+				nombreUsuario= sesion.getNombreusuario();
+				
+				email = sesion.getEmail();
+				
+			}
+			
+			else {
+				
+				nombreUsuario = "Anonimo";
+				
+				email = "desconocido";
+				
+			}
+			
+			
+			
+			String emailBody = cuerpo + "Email mandado desde el usuario: " + nombreUsuario + " con email : " + email + ". Este email esta mandado por la aplicacion de Ane y Leire";
 			generateMailMessage.setContent(emailBody, "text/html");
 			System.out.println("Mail Session has been created successfully..");
 	 
@@ -192,7 +219,13 @@ public class PanelContacto extends JPanel implements ActionListener{
 		}
 		
 	
+	public void sesion(Cliente sesion) {
 		
+		
+		this.sesion = sesion;
+	
+	}
+	
 		
 }
 	

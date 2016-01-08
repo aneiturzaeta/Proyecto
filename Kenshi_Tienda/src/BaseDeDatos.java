@@ -115,14 +115,14 @@ public class BaseDeDatos {
 		try {
 			statement.executeUpdate
 			
-					("create table if not exists cliente (nombreusuario text, nombreapellido text, ciudad string, email string, contraseña string)" +
+					("create table if not exists cliente (nombreusuario string, nombreapellido string, ciudad string, email string, contraseña string)" +
 							
-					"create table if not exists pedido (numeroPedido integer, fecha date, codigo integer, nombreusuario text)"+
+					"create table if not exists pedido (codigo string, fecha string, nombreusuario string)"
 				
 					
-					"create table if not exists productoRopa (codigo integer, nombre text, descripcion text, precio integer, talla text, material text, estilo text)" +
-					
-					"create table if not exists productoComplemento (codigotipo integer, nombre text, descripcion text, precio integer, material text, origen text)" 
+//					" + create table if not exists productoRopa (codigo integer, nombre text, descripcion text, precio integer, talla text, material text, estilo text)" +
+
+//					"create table if not exists productoComplemento (codigotipo integer, nombre text, descripcion text, precio integer, material text, origen text)" 
 					
 					);
 		} catch (SQLException e) {
@@ -135,8 +135,23 @@ public class BaseDeDatos {
 	public static void inicializarValores(){
 		
 		
-		//ponemos unos datos de prueba. pero antes probamos que los datos no estén
+		try {
+			
+			
+			statement.executeUpdate("insert into cliente values('ane', 'Ane Iturzaeta', 'Beasain', 'aneiturzaeta@opendeusto.es', ane)"+ 
+			
+									"insert into cliente values('leire', 'Leire Jauregi', 'Legazpi', 'leire.jauregi@opendeusto.es', leire)" 
+					
+			);
 		
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		
 	}
 	
@@ -144,7 +159,7 @@ public class BaseDeDatos {
 	//GESTION DE NUESTRA BASE DE DATOS
 	
 	
-	public void insertarCliente (Cliente cliente){
+	public static void insertarCliente (Cliente cliente){ //se le llamara desde Registro de clientes
 		
 		
 		String nombreUsuario = cliente.getNombreusuario();
@@ -154,8 +169,6 @@ public class BaseDeDatos {
 		String contra = cliente.getContraseña();
 		
 
-		//final String sent = "insert into cliente values nombreusuario, nombre, ciudad, email, contra";
-		
 		try {
 			String Query = "INSERT INTO cliente VALUES("
 	                + " ' " + nombreUsuario + " ', "
@@ -173,82 +186,94 @@ public class BaseDeDatos {
 	}
 	
 	
-	public void insertarProductoRopa (Producto producto, Ropa ropa) { 
-		
-		int codigo = producto.getCodigo();
-		String nombre = producto.getNombre();
-		String descripcion = producto.getDescripcion();
-		int precio = producto.getPrecio();
-		String talla = ropa.getTalla();
-		String material = ropa.getMaterial();
-		String estilo = ropa.getEstilo();
-		//int existencias = producto.getExistencias();
-		//int tipoProducto = producto.getTipoProducto();
-		
-		
-		//Ya sabemos estos datos, por lo que meterlos a mano
-		try {
-			
-		statement.executeUpdate( "insert into productoRopa values (01, 'Jersey', 'Azul. Cuello redondo', 20,'L', 'Algodon', 'Hipster')");
-		statement.executeUpdate( "insert into productoRopa values (02, 'Jersey', 'Verde. Cuello redondo', 20, 'S', 'Algodon', 'Hipster')");
-		statement.executeUpdate( "insert into productoRopa values (03, 'Jersey', 'Rojo. Cuello redondo', 20, 'L', 'Algodon', 'Hipster')");
-		statement.executeUpdate( "insert into productoRopa values (04, 'Jersey', 'Azul. Cuello redondo', 20, 'L', 'Algodon', 'Hipster')");
-		
-
-		} 
-		catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
-    }
-		
-	}
+//	public void insertarProductoRopa (Producto producto, Ropa ropa) { 
+//		
+//		int codigo = producto.getCodigo();
+//		String nombre = producto.getNombre();
+//		String descripcion = producto.getDescripcion();
+//		int precio = producto.getPrecio();
+//		String talla = ropa.getTalla();
+//		String material = ropa.getMaterial();
+//		String estilo = ropa.getEstilo();
+//		//int existencias = producto.getExistencias();
+//		//int tipoProducto = producto.getTipoProducto();
+//		
+//		
+//		//Ya sabemos estos datos, por lo que meterlos a mano
+//		try {
+//			
+//		statement.executeUpdate( "insert into productoRopa values (01, 'Jersey', 'Azul. Cuello redondo', 20,'L', 'Algodon', 'Hipster')");
+//		statement.executeUpdate( "insert into productoRopa values (02, 'Jersey', 'Verde. Cuello redondo', 20, 'S', 'Algodon', 'Hipster')");
+//		statement.executeUpdate( "insert into productoRopa values (03, 'Jersey', 'Rojo. Cuello redondo', 20, 'L', 'Algodon', 'Hipster')");
+//		statement.executeUpdate( "insert into productoRopa values (04, 'Jersey', 'Azul. Cuello redondo', 20, 'L', 'Algodon', 'Hipster')");
+//		
+//
+//		} 
+//		catch (SQLException ex) {
+//        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+//    }
+//		
+//				
+//		try {
+//			String Query = "INSERT INTO ropa VALUES("
+//	                + " ' " + codigo + " ', "
+//	                + " ' " + descripcion + " ', "
+//	                + " ' " + ciudad + " ', "
+//	                + " ' " + email + " ', "
+//	                + " ' " + contra + " ')";
+//	        Statement st = connection.createStatement();
+//	        st.executeUpdate(Query);
+//	        JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+//	        
+//			} catch (SQLException ex) {
+//	        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+//	    }
+//		
+//	}
+//	
+//public void insertarProductoComplemento (Producto producto, Complemento complemento) { 
+//		
+//		int codigo = producto.getCodigo();
+//		String nombre = producto.getNombre();
+//		String descripcion = producto.getDescripcion();
+//		int precio = producto.getPrecio();
+//		String material = complemento.getMaterial();
+//		String origen = complemento.getOrigen();
+//		
+//		//int existencias = producto.getExistencias();
+//		//int tipoProducto = producto.getTipoProducto();
+//		
+//		
+//		//Ya sabemos estos datos, por lo que meterlos a mano
+//		
+//	
+//		try {
+//			
+//		statement.executeUpdate( "insert into productoComplemento values (11, 'Collar', 'Gargantilla', 10, 'Plata', 'Étnico')");
+//		statement.executeUpdate( "insert into productoComplemento values (12, 'Collar', 'Ópera', 16, 'Cuerdas', 'Hawaiano')");
+//		statement.executeUpdate( "insert into productoComplemento values (13, 'Bufanda', 'Negra', 19.5, 'Algodon', 'Australiano')");
+//		statement.executeUpdate( "insert into productoComplemento values (14, 'Pulsera', 'Brazalete', 40, 'Oro', 'Árabe')");
+//		
+//
+//		} 
+//		catch (SQLException ex) {
+//        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+//    }
+//		
+//	}
 	
-public void insertarProductoComplemento (Producto producto, Complemento complemento) { 
-		
-		int codigo = producto.getCodigo();
-		String nombre = producto.getNombre();
-		String descripcion = producto.getDescripcion();
-		int precio = producto.getPrecio();
-		String material = complemento.getMaterial();
-		String origen = complemento.getOrigen();
-		
-		//int existencias = producto.getExistencias();
-		//int tipoProducto = producto.getTipoProducto();
-		
-		
-		//Ya sabemos estos datos, por lo que meterlos a mano
-		
-	
-		try {
-			
-		statement.executeUpdate( "insert into productoComplemento values (11, 'Collar', 'Gargantilla', 10, 'Plata', 'Étnico')");
-		statement.executeUpdate( "insert into productoComplemento values (12, 'Collar', 'Ópera', 16, 'Cuerdas', 'Hawaiano')");
-		statement.executeUpdate( "insert into productoComplemento values (13, 'Bufanda', 'Negra', 19.5, 'Algodon', 'Australiano')");
-		statement.executeUpdate( "insert into productoComplemento values (14, 'Pulsera', 'Brazalete', 40, 'Oro', 'Árabe')");
-		
-
-		} 
-		catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
-    }
-		
-	}
 	
 	
-	
-	public void insertarPedido (Pedido pedido, Cliente cliente){
+	public static void insertarPedido (String codigo, String nombreUsuario, String fecha){
 		
-		int numeroPedido = pedido.getNumeroPedido();
-		Date fecha = pedido.getFecha();
-		int codigo = pedido.getCodigo();
-		String nombreusuario = cliente.getNombreusuario();
-		
+				
 		try {
 			String Query = "INSERT INTO pedido VALUES("
-	                + " '" + numeroPedido + " ', "
-	                + " '" + fecha + " ', "
 	                + " '" + codigo + " ', "
-	                + " '" + nombreusuario + " ')";
-	        Statement st = connection.createStatement();
+	                + " '" + fecha + " ', "
+	                + " '" + nombreUsuario + " ', " ;
+	       
+			Statement st = connection.createStatement();
 	        st.executeUpdate(Query);
 	        JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
 	        
@@ -257,7 +282,41 @@ public void insertarProductoComplemento (Producto producto, Complemento compleme
 	    }
 		
 	}
+
+	public static void borrarPedidos(Cliente sesion) {
+		// TODO Auto-generated method stub
 	
+		
+			try {
+			
+			
+			statement.executeUpdate("delete from pedido where nombreusuario = " + sesion.getNombreusuario()
+			
+			);
+		
+			JOptionPane.showMessageDialog(null, "Todos sus datos borrados");
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			
+			JOptionPane.showMessageDialog(null, "Datos no borrados. Ha habido un problema");
+			
+		}
+	
+	
+		
+	}
+	
+	
+	public static void comprobarUsuario(String nombreUsuario){
+		
+		
+		
+		
+		
+		
+	}
 	
 	
 	

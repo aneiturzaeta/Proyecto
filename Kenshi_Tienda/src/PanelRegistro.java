@@ -25,7 +25,14 @@ public class PanelRegistro extends JPanel implements ActionListener{
 	private JTextField Usuario;
 	private JLabel textU;
 	
+	private JTextField Email;
+	private JLabel textE;
+	
 	private JButton Aceptar;
+	
+	private Cliente sesion;
+	
+	Cliente nuevocliente;
 	
 	public PanelRegistro(){
 		
@@ -35,7 +42,7 @@ setLayout(null);
 
 		Nombre = new JTextField();
 		//Nombre.setFont(new Font("Century Gothic", Font.BOLD, 50));
-		Nombre.setBounds(94, 75, 231, 20);
+		Nombre.setBounds(94, 52, 231, 20);
 		//Nombre.setEnabled(true);
 		Nombre.setEditable(true);
 		this.add(Nombre);
@@ -44,13 +51,13 @@ setLayout(null);
 		textN = new JLabel();
 		textN.setText("Nombre y apellidos \r\n");
 		textN.setFont(new Font("Century Gothic", Font.BOLD, 12));
-		textN.setBounds(94, 45, 231, 20);
+		textN.setBounds(94, 32, 231, 20);
 		this.add(textN);
 		
 
 		Ciudad = new JTextField();
 		//Nombre.setFont(new Font("Century Gothic", Font.BOLD, 50));
-		Ciudad.setBounds(94, 135, 231, 20);
+		Ciudad.setBounds(94, 153, 231, 20);
 		//Nombre.setEnabled(true);
 		Ciudad.setEditable(true);
 		this.add(Ciudad);
@@ -59,13 +66,31 @@ setLayout(null);
 		textCiudad = new JLabel();
 		textCiudad.setText("Ciudad \r\n");
 		textCiudad.setFont(new Font("Century Gothic", Font.BOLD, 12));
-		textCiudad.setBounds(94, 105, 231, 20);
+		textCiudad.setBounds(94, 134, 231, 20);
 		this.add(textCiudad);
+		
+		
+		Email = new JTextField();
+		//Nombre.setFont(new Font("Century Gothic", Font.BOLD, 50));
+		Email.setBounds(94, 103, 231, 20);
+		//Nombre.setEnabled(true);
+		Email.setEditable(true);
+		this.add(Email);
+		Email.setColumns(10);
+		
+		textE = new JLabel();
+		textE.setText("Email \r\n");
+		textE.setFont(new Font("Century Gothic", Font.BOLD, 12));
+		textE.setBounds(94, 83, 231, 20);
+		this.add(textE);
+		
+		
+		
 		
 		
 		Usuario = new JTextField();
 		//Usuario.setFont(new Font("Century Gothic", Font.BOLD, 50));
-		Usuario.setBounds(94, 195, 231, 20);
+		Usuario.setBounds(94, 204, 231, 20);
 		Usuario.setEditable(true);
 		this.add(Usuario);
 		Usuario.setColumns(10);
@@ -73,30 +98,30 @@ setLayout(null);
 		textU = new JLabel();
 		textU.setText("Nombre de usuario \r\n");
 		textU.setFont(new Font("Century Gothic", Font.BOLD, 12));
-		textU.setBounds(94, 165, 231, 20);
+		textU.setBounds(94, 184, 231, 20);
 		this.add(textU);
 			
 		
 		
 		Contraseña = new JPasswordField();
 		//Contraseña.setFont(new Font("Century Gothic", Font.BOLD, 50));
-		Contraseña.setBounds(94, 255, 231, 20);
+		Contraseña.setBounds(94, 257, 231, 20);
 		//Contraseña.setEnabled(true);
 		Contraseña.setEditable(true);
 		this.add(Contraseña);
 		
 		textCont = new JLabel();
-		textCont.setText("Contrasena nueva \r\n");
+		textCont.setText("Contrase\u00F1a");
 		textCont.setSize(100, 32);
 		textCont.setLocation(200, 100);
 		textCont.setFont(new Font("Century Gothic", Font.BOLD, 12));
-		textCont.setBounds(94, 225, 231, 20);
+		textCont.setBounds(94, 237, 231, 20);
 		this.add(textCont);
 			
 		
 		Aceptar = new JButton("Aceptar");
 		Aceptar.setSize(100, 32);
-		Aceptar.setLocation(100,300 );
+		Aceptar.setLocation(144,302 );
 		Aceptar.setFont(new Font("Century Gothic", Font.BOLD, 16));
 //		BSalir.setBounds(100, 103, 150, 30);
 		Aceptar.addActionListener(this);
@@ -118,17 +143,24 @@ setLayout(null);
 		
 		case "Aceptar":
 			
-		String nombre = Nombre.getText();
+			
+			
+		String nombreapellido = Nombre.getText();
 		
 		String ciudad = Ciudad.getText();
 		
-		String usuario = Usuario.getText();
+		String nombreusuario = Usuario.getText();
+		
+		String email = Email.getText();
 			
 		String contraseña = Contraseña.getText();
 		
+		nuevocliente = new Cliente (nombreusuario, nombreapellido, ciudad, email, contraseña);
+		
+		
 		try {
 			
-			comprobarUsuario (usuario);
+			int correcto = comprobarUsuario();
 		
 //			LLamada a BD
 //			int numeroUsuarios = numeroUsuarios(); 
@@ -150,11 +182,19 @@ setLayout(null);
 				
 //			JOptionPane.showInputDialog("Entrado bien");
 			
+	
+		if (correcto== 1){ //que no haya uno igual, procede a guardarlo en BD
+					
+			
+			BaseDeDatos.insertarCliente(nuevocliente);
+			
+			
+		}
+			
 			
 			}
 			
-			
-			
+		
 		
 			
 		catch (ExcepUsuario e1) {
@@ -172,16 +212,28 @@ setLayout(null);
 		
 	}
 
-	private void comprobarUsuario(String usuario) throws ExcepUsuario{
+	private int comprobarUsuario() throws ExcepUsuario{
 		// TODO Auto-generated method stub
-		if(usuario.isEmpty()){
+		if(Usuario.getText()==""){
 			
 			throw new ExcepUsuario ();
 			
 		}
 		
-		//comprobrar que es @ una direccion de correo para luego poder mandar el mail
+		BaseDeDatos.comprobarUsuario(Usuario.getText()); 
+		
+		return 1;
+		
+		
 		//mirar tambien si existe el nombre de usuario
+	}
+	
+	
+	public void sesion(Cliente sesion) {
+		
+		
+		this.sesion = sesion;
+	
 	}
 
 }

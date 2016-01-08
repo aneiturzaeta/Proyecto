@@ -27,6 +27,8 @@ public class PanelComplemento extends JPanel implements ActionListener{
 	private JButton Añadir;
 
 	
+	private Cliente sesion;
+	
 	public PanelComplemento() {
 
 		
@@ -48,16 +50,16 @@ public class PanelComplemento extends JPanel implements ActionListener{
 					
 					{"11", "Collar", "Gargantilla", 10+" €", "Plata", "Etníco"},
 					{"12", "Collar", "Ópera", 16+" €", "Cuerdas", "Hawaiano"},
-					{"13", "Bufanda", "Negra", 19,5+" €", "Algodon", "Australiano"},
+					{"13", "Bufanda", "Negra", 19+" €", "Algodon", "Australiano"},
 					{"14", "Pulsera", "Brazalete", 40+" €", "Oro", "Árabe"},
 			};	
 			
 			
 			table = new JTable(datos, columnas);
-			table.setBounds(20, 65, 405, 64);
+			table.setBounds(40, 94, 430, 64);
 			
-		//	JScrollPane tableContainer = new JScrollPane(table);
-		//	this.add(tableContainer, BorderLayout.CENTER);
+//			JScrollPane tableContainer = new JScrollPane(table);
+//			this.add(tableContainer, BorderLayout.CENTER);
 			
 			table.getColumn("Codigo").setPreferredWidth(25);
 			table.getColumn("Precio").setPreferredWidth(35);
@@ -69,7 +71,7 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);				
 			this.add(table);
 			
-			
+//			this.add(tableContainer);
 			
 			
 			textComplemento = new JLabel();
@@ -78,12 +80,15 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			textComplemento.setOpaque(false);
 			textComplemento.setForeground(Color.BLACK);
 			//textComplemento.setEnabled(false);
-			textComplemento.setBounds(119, 24, 266, 20);
+			textComplemento.setBounds(71, 100, 266, 20);
 			add(textComplemento);
 			
 			
-			Añadir = new JButton("A\u00F1adir Producto");
-			Añadir.setBounds(169, 160, 110, 23);
+			Añadir = new JButton("Añadir Producto");
+			Añadir.setBounds(106, 270, 200, 23);
+			Añadir.setFont(new Font("Century Gothic", Font.BOLD, 16));
+			Añadir.setContentAreaFilled(false);
+			Añadir.setBorderPainted(false);
 			Añadir.addActionListener(this);
 			Añadir.setActionCommand("Añadir");
 			add(Añadir);
@@ -185,6 +190,13 @@ public class PanelComplemento extends JPanel implements ActionListener{
 	       //all cells false
 	       return false;
 	    }
-	
 
+	  
+		public void sesion(Cliente sesion) {
+			
+			
+			this.sesion = sesion;
+		
+		}
+		
 }

@@ -21,6 +21,9 @@ public class PanelEntrar extends JPanel implements ActionListener {
 		
 	private JButton Aceptar;
 	
+	private Cliente sesion;
+	
+	
 	public PanelEntrar(){
 		
 		
@@ -84,33 +87,54 @@ setLayout(null);
 			
 			String usuario = Usuario.getText();
 			
-			try {
-				
-				comprobarUsu (usuario);
-				
 			
-			//	PanelGestionContacto panelGestionCont = new PanelGestionContacto ();
-				//panelGestionCont.setPreferredSize( new Dimension( 800,125 ) );
-				//panelGestionCont.setBackground(SystemColor.activeCaption);
-				//this.add(panelGestionCont, BorderLayout.CENTER);
+			if (sesion.getNombreusuario()!= null && !sesion.getNombreusuario().isEmpty()){
 			
-				
-				//JOptionPane.showInputDialog("Entrado bien");
-			}
-				
-			catch (ExcepUsuario e1) {
 			
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(this, e1.Informar());
+			
+					try {
+						
+						comprobarUsu (usuario);
+						
+					
+					//	PanelGestionContacto panelGestionCont = new PanelGestionContacto ();
+						//panelGestionCont.setPreferredSize( new Dimension( 800,125 ) );
+						//panelGestionCont.setBackground(SystemColor.activeCaption);
+						//this.add(panelGestionCont, BorderLayout.CENTER);
+					
+						
+						//JOptionPane.showInputDialog("Entrado bien");
+					}
+						
+					catch (ExcepUsuario e1) {
+					
+							// TODO Auto-generated catch block
+							JOptionPane.showMessageDialog(this, e1.Informar());
+					}
+						
+					try {
+					comprobarCont(contraseña);
+					}
+					catch (ExcepCont e1){
+						
+						JOptionPane.showMessageDialog(this, e1.Informar());
+					}
+					
+			
+			//entrar como usuario. Cambiar la sesion
+					
 			}
+			
+			
+			else {
+								
+				JOptionPane.showMessageDialog(this, "Estas con una sesion iniciada. Primero cierra la sesion");
 				
-			try {
-			comprobarCont(contraseña);
 			}
-			catch (ExcepCont e1){
-				
-				JOptionPane.showMessageDialog(this, e1.Informar());
-			}
+	
+			
+			
+			
 		break;
 		
 		}
@@ -137,7 +161,12 @@ setLayout(null);
 	
 	
 	
+	public void sesion(Cliente sesion) {
+		
+		
+		this.sesion = sesion;
 	
+	}
 	
 	
 	

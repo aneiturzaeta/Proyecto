@@ -26,10 +26,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 7046431761927583577L;
 	
-	//NUESTRA BASE DE DATOS
-	static BaseDeDatos BD;
-	
-	
+
 	//private PanelImagen conImagen;
 	
 	private JPanel PanelSuperior;
@@ -58,6 +55,8 @@ public class frmPrincipal extends JFrame implements ActionListener{
 	private PanelEntrar panelEntrar = new PanelEntrar();
 	private PanelEntrarExtra panelEntrarExtra = new PanelEntrarExtra();
 	
+	
+	private Cliente sesionCliente;
 	
 	
 	private JButton BAdmin;
@@ -259,9 +258,8 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		
 		//PANEL IZQUIERDA
 		
-		PanelRopa panelRopa = new PanelRopa ();
 		
-		panelRopa.setPreferredSize( new Dimension( 00,125 ) );
+		panelRopa.setPreferredSize( new Dimension( 430,125 ) );
 		panelRopa.setBackground(SystemColor.activeCaption);
 		this.add(panelRopa, BorderLayout.WEST);
 				
@@ -270,7 +268,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		//PANEL DERECHA
 		
 		
-		panelComplemento.setPreferredSize( new Dimension( 400,  125 ) );
+		panelComplemento.setPreferredSize( new Dimension( 430,  125 ) );
 		panelComplemento.setBackground(SystemColor.activeCaption);
 		this.add(panelComplemento, BorderLayout.EAST);
 		
@@ -291,13 +289,13 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		
 		case "Admin":
 					
-			panelAdmin.setPreferredSize( new Dimension( 400,500 ) );
+			panelAdmin.setPreferredSize( new Dimension( 430,500 ) );
 			panelAdmin.setBackground(SystemColor.activeCaption);
 			this.add(panelAdmin, BorderLayout.WEST);
 			
 				
 					
-			panelAdminExtra.setPreferredSize( new Dimension( 400,500 ) );
+			panelAdminExtra.setPreferredSize( new Dimension( 430,500 ) );
 			panelAdminExtra.setBackground(SystemColor.activeCaption);
 			this.add(panelAdminExtra, BorderLayout.EAST);
 			
@@ -320,12 +318,12 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 		case "Entrar" :
 			
-			panelEntrar.setPreferredSize( new Dimension( 400,500 ) );
+			panelEntrar.setPreferredSize( new Dimension( 430,500 ) );
 			panelEntrar.setBackground(SystemColor.activeCaption);
 			this.add(panelEntrar, BorderLayout.WEST);
 				
 					
-			panelEntrarExtra.setPreferredSize( new Dimension( 400,500 ) );
+			panelEntrarExtra.setPreferredSize( new Dimension( 430,500 ) );
 			panelEntrarExtra.setBackground(SystemColor.activeCaption);
 			this.add(panelEntrarExtra, BorderLayout.EAST);
 			
@@ -346,12 +344,12 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 		case "Registro" :		
 			
-			panelRegis.setPreferredSize( new Dimension( 400,500 ) );
+			panelRegis.setPreferredSize( new Dimension( 430,500 ) );
 			panelRegis.setBackground(SystemColor.activeCaption);
 			this.add(panelRegis, BorderLayout.WEST);
 				
 					
-			panelRegisExtra.setPreferredSize( new Dimension( 400,500 ) );
+			panelRegisExtra.setPreferredSize( new Dimension( 430,500 ) );
 			panelRegisExtra.setBackground(SystemColor.activeCaption);
 			this.add(panelRegisExtra, BorderLayout.EAST);
 			
@@ -374,11 +372,11 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		case "Email" :
 			
 					
-			panelCont.setPreferredSize (new Dimension (400, 500));
+			panelCont.setPreferredSize (new Dimension (430, 500));
 			panelCont.setBackground(SystemColor.activeCaption);
 			this.add(panelCont, BorderLayout.WEST);
 			
-			panelContExtra.setPreferredSize (new Dimension (400, 500));
+			panelContExtra.setPreferredSize (new Dimension (430, 500));
 			panelContExtra.setBackground(SystemColor.activeCaption);
 			this.add(panelContExtra, BorderLayout.EAST);
 			
@@ -400,11 +398,11 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 		case "Carro" : 
 			
-			panelCarroExtra.setPreferredSize (new Dimension (400, 500));
+			panelCarroExtra.setPreferredSize (new Dimension (430, 500));
 			panelCarroExtra.setBackground(SystemColor.activeCaption);
 			this.add(panelCarroExtra, BorderLayout.WEST);
 			
-			panelCarro.setPreferredSize (new Dimension (400, 500));
+			panelCarro.setPreferredSize (new Dimension (430, 500));
 			panelCarro.setBackground(SystemColor.activeCaption);
 			this.add(panelCarro, BorderLayout.EAST);
 			
@@ -460,18 +458,11 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		frmPrincipal objPrincipal = new frmPrincipal ();
 		objPrincipal.setVisible(true);
 	
-		
-		BD = new BaseDeDatos();
-		
-		BD.initBD("Kenshi");
-		BD.crearTablaBD();
-		BD.inicializarValores();
-		
-		//BaseDeDatos.initBD("Kenshi");
-		//BaseDeDatos.crearTablaBD();
-		//BaseDeDatos.inicializarValores();
-		
-		
+				
+		BaseDeDatos.initBD("Kenshi");
+		BaseDeDatos.crearTablaBD();
+		BaseDeDatos.inicializarValores();
+			
 		
 	}
 
