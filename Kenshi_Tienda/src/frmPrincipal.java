@@ -33,9 +33,9 @@ public class frmPrincipal extends JFrame implements ActionListener{
 	
 	private JPanel PanelInferior;
 	
-	private JPanel panelRopa = new PanelRopa ();
+	private PanelRopa panelRopa = new PanelRopa ();
 		
-	private JPanel panelComplemento = new PanelComplemento ();
+	private PanelComplemento panelComplemento = new PanelComplemento ();
 			
 	
 	private PanelAdministrador panelAdmin = new PanelAdministrador();
@@ -56,7 +56,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 	private PanelEntrarExtra panelEntrarExtra = new PanelEntrarExtra();
 	
 	
-	private Cliente sesionCliente;
+	Cliente sesion;
 	
 	
 	private JButton BAdmin;
@@ -74,12 +74,12 @@ public class frmPrincipal extends JFrame implements ActionListener{
 	
 	private Reloj reloj;
 	
-	//panel donde iran los productos
-	private JPanel productos;
-	
-		
+			
 	public frmPrincipal() {
 	
+		sesion =  new Cliente("", "", "", "", "");
+		
+		
 		BMenu = new JButton(new ImageIcon( frmPrincipal.class.getResource("img/menu.png"))); //añadimos un boton
 		BMenu.setFont(new Font("Century Gothic", Font.BOLD, 12));
 		//BAtras.setLocation(100,100);
@@ -261,6 +261,9 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		
 		panelRopa.setPreferredSize( new Dimension( 430,125 ) );
 		panelRopa.setBackground(SystemColor.activeCaption);
+		
+		panelRopa.pasarSesion(sesion);
+		
 		this.add(panelRopa, BorderLayout.WEST);
 				
 			
@@ -270,11 +273,14 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		
 		panelComplemento.setPreferredSize( new Dimension( 430,  125 ) );
 		panelComplemento.setBackground(SystemColor.activeCaption);
+		
+		panelComplemento.pasarSesion(sesion);
+		
 		this.add(panelComplemento, BorderLayout.EAST);
 		
 		this.setResizable(false);
 		
-		
+	
 		
 	}
 
@@ -320,6 +326,10 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 			panelEntrar.setPreferredSize( new Dimension( 430,500 ) );
 			panelEntrar.setBackground(SystemColor.activeCaption);
+			
+			panelEntrar.pasarSesion(sesion);
+			sesion = panelEntrar.devolverSesion();
+			
 			this.add(panelEntrar, BorderLayout.WEST);
 				
 					
@@ -346,6 +356,9 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 			panelRegis.setPreferredSize( new Dimension( 430,500 ) );
 			panelRegis.setBackground(SystemColor.activeCaption);
+			
+			panelRegis.pasarSesion(sesion);
+			
 			this.add(panelRegis, BorderLayout.WEST);
 				
 					
@@ -374,6 +387,9 @@ public class frmPrincipal extends JFrame implements ActionListener{
 					
 			panelCont.setPreferredSize (new Dimension (430, 500));
 			panelCont.setBackground(SystemColor.activeCaption);
+			
+			panelCont.pasarSesion(sesion);
+			
 			this.add(panelCont, BorderLayout.WEST);
 			
 			panelContExtra.setPreferredSize (new Dimension (430, 500));
@@ -404,6 +420,9 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 			panelCarro.setPreferredSize (new Dimension (430, 500));
 			panelCarro.setBackground(SystemColor.activeCaption);
+			
+			panelCarro.pasarSesion(sesion);
+			
 			this.add(panelCarro, BorderLayout.EAST);
 			
 			panelAdmin.setVisible(false);
@@ -434,7 +453,12 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			panelCarroExtra.setVisible(false);
 			panelEntrar.setVisible(false);
 			panelEntrarExtra.setVisible(false);
+			
+				
+			panelRopa.pasarSesion(sesion);
 			panelRopa.setVisible(true);
+						
+			panelComplemento.pasarSesion(sesion);
 			panelComplemento.setVisible(true);
 			
 			break;
@@ -445,6 +469,12 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 			
 		case "Logout":
+			
+			sesion.setNombreusuario("");
+			sesion.setNombreapellido("");
+			sesion.setCiudad("");
+			sesion.setEmail("");
+			sesion.setContraseña("");
 			
 			JOptionPane.showMessageDialog(this, "Sesión cerrada");
 			
@@ -459,7 +489,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		objPrincipal.setVisible(true);
 	
 				
-		BaseDeDatos.initBD("Kenshi");
+		BaseDeDatos.initBD("Kenshi.bd");
 		BaseDeDatos.crearTablaBD();
 		BaseDeDatos.inicializarValores();
 			

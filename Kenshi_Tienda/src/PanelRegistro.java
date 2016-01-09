@@ -160,7 +160,7 @@ setLayout(null);
 		
 		try {
 			
-			int correcto = comprobarUsuario();
+			int existe = comprobarUsuario();
 		
 //			LLamada a BD
 //			int numeroUsuarios = numeroUsuarios(); 
@@ -183,12 +183,26 @@ setLayout(null);
 //			JOptionPane.showInputDialog("Entrado bien");
 			
 	
-		if (correcto== 1){ //que no haya uno igual, procede a guardarlo en BD
+		if (existe== 0){ //que no haya uno igual, procede a guardarlo en BD
 					
 			
 			BaseDeDatos.insertarCliente(nuevocliente);
 			
+			Nombre.setText("");
+			Ciudad.setText("");
+			Contraseña.setText("");
+			Usuario.setText("");
+			Email.setText("");
+								
+			this.repaint();
 			
+		}
+		
+		else if (existe ==1){
+			
+			JOptionPane.showMessageDialog(this,"Ya existe ese nombre de usuario" );
+			
+		
 		}
 			
 			
@@ -220,16 +234,16 @@ setLayout(null);
 			
 		}
 		
-		BaseDeDatos.comprobarUsuario(Usuario.getText()); 
+		int existe = BaseDeDatos.comprobarUsuario(Usuario.getText()); 
 		
-		return 1;
+		return existe;
 		
 		
 		//mirar tambien si existe el nombre de usuario
 	}
 	
 	
-	public void sesion(Cliente sesion) {
+	public void pasarSesion(Cliente sesion) {
 		
 		
 		this.sesion = sesion;

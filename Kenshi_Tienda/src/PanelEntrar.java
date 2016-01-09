@@ -30,7 +30,6 @@ public class PanelEntrar extends JPanel implements ActionListener {
 setLayout(null);
 
 		Usuario = new JTextField();
-		Usuario.setFont(new Font("Century Gothic", Font.BOLD, 50));
 		Usuario.setBounds(94, 75, 231, 20);
 		Usuario.setEnabled(true);
 		Usuario.setEditable(true);
@@ -46,7 +45,6 @@ setLayout(null);
 		
 		
 		Contraseña = new JPasswordField();
-		Contraseña.setFont(new Font("Century Gothic", Font.BOLD, 50));
 		Contraseña.setBounds(94, 159, 231, 20);
 		Contraseña.setEnabled(true);
 		Contraseña.setEditable(true);
@@ -88,22 +86,15 @@ setLayout(null);
 			String usuario = Usuario.getText();
 			
 			
-			if (sesion.getNombreusuario()!= null && !sesion.getNombreusuario().isEmpty()){
+			if (sesion.getNombreusuario()== "" ){
 			
 			
 			
 					try {
 						
 						comprobarUsu (usuario);
-						
 					
-					//	PanelGestionContacto panelGestionCont = new PanelGestionContacto ();
-						//panelGestionCont.setPreferredSize( new Dimension( 800,125 ) );
-						//panelGestionCont.setBackground(SystemColor.activeCaption);
-						//this.add(panelGestionCont, BorderLayout.CENTER);
-					
-						
-						//JOptionPane.showInputDialog("Entrado bien");
+
 					}
 						
 					catch (ExcepUsuario e1) {
@@ -113,16 +104,42 @@ setLayout(null);
 					}
 						
 					try {
-					comprobarCont(contraseña);
+
+						comprobarCont(contraseña);
+					
 					}
 					catch (ExcepCont e1){
 						
 						JOptionPane.showMessageDialog(this, e1.Informar());
 					}
 					
-			
-			//entrar como usuario. Cambiar la sesion
 					
+			int ok = BaseDeDatos.comprobarUsuarioContraseña(usuario, contraseña);		
+					
+				if (ok == 1){
+					
+					
+					sesion.setNombreusuario(usuario);
+					sesion.setContraseña(contraseña);
+									
+					
+					JOptionPane.showMessageDialog(this, "Has iniciado sesion correctamente con nombre de usuario " + usuario);
+					
+					Contraseña.setText("");
+					Usuario.setText("");
+													
+					this.repaint();
+					
+				}
+				
+				else JOptionPane.showMessageDialog(this, "Error en la contraseña o nombre de usuario");				
+					
+				Contraseña.setText("");
+				Usuario.setText("");
+							
+							
+				this.repaint();				
+				
 			}
 			
 			
@@ -131,9 +148,7 @@ setLayout(null);
 				JOptionPane.showMessageDialog(this, "Estas con una sesion iniciada. Primero cierra la sesion");
 				
 			}
-	
-			
-			
+				
 			
 		break;
 		
@@ -160,8 +175,14 @@ setLayout(null);
 	}
 	
 	
+	public Cliente devolverSesion(){
+		
+		return sesion;
+					
+	}
 	
-	public void sesion(Cliente sesion) {
+	
+	public void pasarSesion(Cliente sesion) {
 		
 		
 		this.sesion = sesion;

@@ -4,6 +4,9 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -28,6 +31,11 @@ public class PanelComplemento extends JPanel implements ActionListener{
 
 	
 	private Cliente sesion;
+
+	String codigoSeleccion;
+    String nombreusuario;
+    String fecha;
+    
 	
 	public PanelComplemento() {
 
@@ -56,7 +64,7 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			
 			
 			table = new JTable(datos, columnas);
-			table.setBounds(40, 94, 430, 64);
+			table.setBounds(34, 100, 389, 180);;
 			
 //			JScrollPane tableContainer = new JScrollPane(table);
 //			this.add(tableContainer, BorderLayout.CENTER);
@@ -64,7 +72,7 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			table.getColumn("Codigo").setPreferredWidth(25);
 			table.getColumn("Precio").setPreferredWidth(35);
 			
-			
+						
 //			table.setEnabled(false);
 
 			
@@ -80,12 +88,12 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			textComplemento.setOpaque(false);
 			textComplemento.setForeground(Color.BLACK);
 			//textComplemento.setEnabled(false);
-			textComplemento.setBounds(71, 100, 266, 20);
+			textComplemento.setBounds(100, 50, 350, 20);
 			add(textComplemento);
 			
 			
 			Añadir = new JButton("Añadir Producto");
-			Añadir.setBounds(106, 270, 200, 23);
+			Añadir.setBounds(106, 300, 200, 23);
 			Añadir.setFont(new Font("Century Gothic", Font.BOLD, 16));
 			Añadir.setContentAreaFilled(false);
 			Añadir.setBorderPainted(false);
@@ -96,6 +104,8 @@ public class PanelComplemento extends JPanel implements ActionListener{
 		
 		
 	}
+	
+	
 //	table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 //	
 //		@Override
@@ -125,78 +135,68 @@ public class PanelComplemento extends JPanel implements ActionListener{
 //	});
 	
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+	
 		switch (e.getActionCommand()) {
 		
-		case "Añadir":
-			
-			añadir(0, "añadir");
-			
-			JOptionPane.showMessageDialog(this, "No se ha seleccionado ningun producto");
-			
+			case "Añadir":
+				
+				if (sesion.getNombreusuario().equals("")){
+					
+					
+					JOptionPane.showMessageDialog(this, "Primero inicia la sesion");			
+					
+					
+				}
+				
+				else { //si la sesion esta iniciada
+					
+									
+						if (table.getSelectedRow() == -1){
 							
-			//if get selected row is not null --> actuar
-			
-			//getselectedrow (el numero)
-			
-			//insertar reserva BD de ese numero y con el nombre de usuario
-			
-			
-			break;
-		
-	}
-	}
-	
-	public void añadir (int fila, String etiqueta){
-		
-		int filaSele;
-		boolean añadir = false;
-		
-		switch (etiqueta){
-		
-			case "Añadir": añadir = true; break;
+							JOptionPane.showMessageDialog(this, "No se ha seleccionado ningun producto");
+							
+							return;
+						}
 						
-			case "Fila": filaSele = fila; break;
-		
+						else if (table.getSelectedRow() > -1){
+						
+						System.out.println(table.getValueAt(table.getSelectedRow(), 0));			
+						
+			        	//codigo producto
+			        	codigoSeleccion = table.getValueAt(table.getSelectedRow(), 0).toString(); //imprime el codigo del producto seleccionado
+			            System.out.println(codigoSeleccion);
+			        	
+			            //nombreusuario
+			            
+			            nombreusuario = sesion.getNombreusuario();
+			            
+			            
+			            //fecha
+			            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			            Date fechaDate = Calendar.getInstance().getTime();        
+			            fecha = df.format(fechaDate);
+						
+									
+						BaseDeDatos.insertarPedido(codigoSeleccion, nombreusuario, fecha);
+				
+						}
+				
+				}
+				
+				break;
 		}
 		
-		
-		Date fecha = new Date();
-				
-		Random r= new Random(33);
-				
-		int numeroPedido = r.nextInt(10000);
-		
-		int codigo = 1; //el codigo del producto;
-		
-		String usuario="5"; //el nombre de usuario
-		
-//		Pedido nuevo = new Pedido(numeroPedido, fecha, codigo, usuario);
-		
+	}  
 	
-		
-//		llamar a base de datos
-//		insertarReserva(nuevo);
+	public void pasarSesion(Cliente sesion) {
 		
 		
+		this.sesion = sesion;
+	
 	}
-	
-	
-	
-	  public boolean isCellEditable(int row, int column) {
-	       //all cells false
-	       return false;
-	    }
-
-	  
-		public void sesion(Cliente sesion) {
-			
-			
-			this.sesion = sesion;
-		
-		}
 		
 }

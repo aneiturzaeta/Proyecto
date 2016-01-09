@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -113,18 +114,21 @@ public class BaseDeDatos {
 		if (statement==null) return;
 		
 		try {
-			statement.executeUpdate
-			
-					("create table if not exists cliente (nombreusuario string, nombreapellido string, ciudad string, email string, contraseña string)" +
+		
+			String sentencia = "CREATE TABLE IF NOT EXISTS CLIENTE (NOMBREUSUARIO TEXT, NOMBREAPELLIDO TEXT, CIUDAD TEXT, EMAIL TEXT, CONTRASEÑA TEXT)";
 							
-					"create table if not exists pedido (codigo string, fecha string, nombreusuario string)"
+			String sentencia2= "CREATE TABLE IF NOT EXISTS PEDIDO (CODIGO TEXT, FECHA TEXT, NOMBREUSUARIO TEXT)";
 				
 					
 //					" + create table if not exists productoRopa (codigo integer, nombre text, descripcion text, precio integer, talla text, material text, estilo text)" +
 
 //					"create table if not exists productoComplemento (codigotipo integer, nombre text, descripcion text, precio integer, material text, origen text)" 
 					
-					);
+			
+			statement.executeUpdate(sentencia);
+			
+			statement.executeUpdate(sentencia2);
+	
 		} catch (SQLException e) {
 			// Si hay excepción es que la tabla ya existía (lo cual es correcto)
 			e.printStackTrace();  
@@ -138,14 +142,15 @@ public class BaseDeDatos {
 		try {
 			
 			
-			statement.executeUpdate("insert into cliente values('ane', 'Ane Iturzaeta', 'Beasain', 'aneiturzaeta@opendeusto.es', ane)"+ 
+			String sentenciaInicial = "INSERT INTO CLIENTE VALUES('ane', 'Ane Iturzaeta', 'Beasain', 'aneiturzaeta@opendeusto.es', 'ane')"; 
 			
-									"insert into cliente values('leire', 'Leire Jauregi', 'Legazpi', 'leire.jauregi@opendeusto.es', leire)" 
+			String sentenciaInicial2= "INSERT INTO CLIENTE VALUES('leire', 'Leire Jauregi', 'Legazpi', 'leire.jauregi@opendeusto.es', 'leire')"; 
 					
-			);
+			
+		statement.executeUpdate(sentenciaInicial);
 		
-			
-			
+		statement.executeUpdate(sentenciaInicial2);
+		
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -170,15 +175,13 @@ public class BaseDeDatos {
 		
 
 		try {
-			String Query = "INSERT INTO cliente VALUES("
-	                + " ' " + nombreUsuario + " ', "
-	                + " ' " + nombre + " ', "
-	                + " ' " + ciudad + " ', "
-	                + " ' " + email + " ', "
-	                + " ' " + contra + " ')";
-	        Statement st = connection.createStatement();
-	        st.executeUpdate(Query);
-	        JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+			String Query = "INSERT INTO CLIENTE VALUES( ' " + nombreUsuario + " ', ' " + nombre + " ', ' " + ciudad + " ', ' " + email + " ', ' " + contra + " ')";
+			
+
+			statement.executeUpdate(Query);
+			
+		
+	        JOptionPane.showMessageDialog(null, "Usuario almacenado de forma exitosa");
 	        
 			} catch (SQLException ex) {
 	        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
@@ -268,13 +271,11 @@ public class BaseDeDatos {
 		
 				
 		try {
-			String Query = "INSERT INTO pedido VALUES("
-	                + " '" + codigo + " ', "
-	                + " '" + fecha + " ', "
-	                + " '" + nombreUsuario + " ', " ;
-	       
-			Statement st = connection.createStatement();
-	        st.executeUpdate(Query);
+			String Query = "INSERT INTO PEDIDO VALUES('" + codigo + " ', ' "+ fecha + " ', '" + nombreUsuario + " ') " ;	       
+
+			
+			statement.executeUpdate(Query);
+			
 	        JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
 	        
 			} catch (SQLException ex) {
@@ -290,17 +291,17 @@ public class BaseDeDatos {
 			try {
 			
 			
-			statement.executeUpdate("delete from pedido where nombreusuario = " + sesion.getNombreusuario()
+			statement.executeUpdate("DELETE FROM PEDIDO WHERE NOMBREUSUARIO = " + "'" + sesion.getNombreusuario() + "'"
 			
 			);
 		
-			JOptionPane.showMessageDialog(null, "Todos sus datos borrados");
+			JOptionPane.showMessageDialog(null, "Todos sus pedidos borrados");
 			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			
-			JOptionPane.showMessageDialog(null, "Datos no borrados. Ha habido un problema");
+			JOptionPane.showMessageDialog(null, "Pedidos no borrados. Ha habido un problema");
 			
 		}
 	
@@ -309,15 +310,132 @@ public class BaseDeDatos {
 	}
 	
 	
-	public static void comprobarUsuario(String nombreUsuario){
+	public static int comprobarUsuario(String nombreUsuario){
+		
+		
+		int comprobacion = 0;
+		
+				
+		try {
+			
+			ResultSet rs = statement.executeQuery ("SELECT NOMBREUSUARIO FROM USUARIO");
+		     
+			while(rs.next())
+		     
+				{
+		        
+				if (rs.getString("nombreusuario").equals(nombreUsuario)) {
+					
+					comprobacion = 1;
+					
+					return comprobacion;
+					
+				}
+				
+				else comprobacion = 0;
+				
+		      }
+			
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			
+			comprobacion = 0;
+			
+		}
 		
 		
 		
 		
+		return comprobacion;
 		
 		
 	}
 	
 	
+	public static int comprobarUsuarioContraseña(String nombreusuario, String contraseña){
+		
+		
+		int ok= 0;
+		
+		try {
+			
+			String query = "SELECT NOMBREUSUARIO, CONTRASEÑA FROM CLIENTE";
+			
+			ResultSet rs = statement.executeQuery (query);
+		     
+			while(rs.next())
+		     
+				{
+		        
+				if (rs.getString("NOMBREUSUARIO").equals(nombreusuario)) {
+					
+					
+					if (rs.getString("CONTRASEÑA").equals(contraseña)){
+						
+						ok = 1;						
+						
+						return ok;
+					}	
+					
+					else ok = 0;
+					
+				}
+				
+				else ok = 0;
+				
+		      }	
+		rs.close();
+		}
+		
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			
+			JOptionPane.showMessageDialog(null, "No se ha podido realizar operacion SQL");
+			
+		}
+		
+		return ok;
+	}
 	
+	
+	public static ArrayList<Pedido> buscarPedidos(String nombreusuario){
+		
+		ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+		
+			try {
+								
+				
+			String query = "SELECT CODIGO, FECHA FROM PEDIDO WHERE NOMBREUSUARIO = " + "'"+  nombreusuario + "'";
+			
+			ResultSet rs;
+			
+			rs = statement.executeQuery (query);
+			
+			while(rs.next())
+		     
+				{		       
+				
+				Pedido pedido = new Pedido(rs.getString("CODIGO"),rs.getString("FECHA"), rs.getString("NOMBREUSUARIO"));
+				
+				pedidos.add(pedido);
+								
+				}	
+			
+			rs.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		     
+			
+	return pedidos;
+		
+		
+		
+	}
+		
 }
