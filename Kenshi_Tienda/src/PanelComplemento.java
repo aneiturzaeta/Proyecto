@@ -49,7 +49,7 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			
 			
 			
-			String[] columnas = {"Codigo","Nombre", "Descripcion", "Precio",  "Material", "Orígen"};
+			String[] columnas = {"Codigo","Nombre", "Descripcion", "Precio",  "Material", "Origen"};
 			
 			
 			//se cargan desde la BD. 
@@ -64,22 +64,22 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			
 			
 			table = new JTable(datos, columnas);
-			table.setBounds(34, 100, 389, 180);;
-			
-//			JScrollPane tableContainer = new JScrollPane(table);
-//			this.add(tableContainer, BorderLayout.CENTER);
-			
-			table.getColumn("Codigo").setPreferredWidth(25);
-			table.getColumn("Precio").setPreferredWidth(35);
+						
+			table.getColumn("Codigo").setPreferredWidth(50);
+			table.getColumn("Nombre").setPreferredWidth(70);
+			table.getColumn("Descripcion").setPreferredWidth(160);
+			table.getColumn("Precio").setPreferredWidth(50);
+			table.getColumn("Material").setPreferredWidth(90);
+			table.getColumn("Origen").setPreferredWidth(60);
 			
 						
-//			table.setEnabled(false);
-
+			JScrollPane scrollp = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			scrollp.setSize(395, 200);
+			scrollp.setLocation(22, 101);
 			
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);				
-			this.add(table);
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);		
 			
-//			this.add(tableContainer);
+			this.add(scrollp, BorderLayout.WEST);
 			
 			
 			textComplemento = new JLabel();
@@ -93,7 +93,7 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			
 			
 			Añadir = new JButton("Añadir Producto");
-			Añadir.setBounds(106, 300, 200, 23);
+			Añadir.setBounds(106, 330, 200, 23);
 			Añadir.setFont(new Font("Century Gothic", Font.BOLD, 16));
 			Añadir.setContentAreaFilled(false);
 			Añadir.setBorderPainted(false);
@@ -181,7 +181,7 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			            fecha = df.format(fechaDate);
 						
 									
-						BaseDeDatos.insertarPedido(codigoSeleccion, nombreusuario, fecha);
+						BaseDeDatos.insertarPedido(codigoSeleccion, fecha, nombreusuario);
 				
 						}
 				

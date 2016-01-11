@@ -262,11 +262,13 @@ public class frmPrincipal extends JFrame implements ActionListener{
 		panelRopa.setPreferredSize( new Dimension( 430,125 ) );
 		panelRopa.setBackground(SystemColor.activeCaption);
 		
+			
+		
 		panelRopa.pasarSesion(sesion);
 		
-		this.add(panelRopa, BorderLayout.WEST);
+//		this.add(panelRopa, BorderLayout.WEST);
 				
-			
+		this.getContentPane().add(panelRopa, BorderLayout.WEST);		
 		
 		//PANEL DERECHA
 		
@@ -422,6 +424,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			panelCarro.setBackground(SystemColor.activeCaption);
 			
 			panelCarro.pasarSesion(sesion);
+			panelCarro.sacarPedidos();
 			
 			this.add(panelCarro, BorderLayout.EAST);
 			

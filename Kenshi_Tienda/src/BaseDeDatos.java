@@ -1,10 +1,12 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -119,12 +121,7 @@ public class BaseDeDatos {
 							
 			String sentencia2= "CREATE TABLE IF NOT EXISTS PEDIDO (CODIGO TEXT, FECHA TEXT, NOMBREUSUARIO TEXT)";
 				
-					
-//					" + create table if not exists productoRopa (codigo integer, nombre text, descripcion text, precio integer, talla text, material text, estilo text)" +
-
-//					"create table if not exists productoComplemento (codigotipo integer, nombre text, descripcion text, precio integer, material text, origen text)" 
-					
-			
+		
 			statement.executeUpdate(sentencia);
 			
 			statement.executeUpdate(sentencia2);
@@ -138,32 +135,76 @@ public class BaseDeDatos {
 	
 	public static void inicializarValores(){
 		
+		boolean ok = comprobarInicializados();
+		
+		
+		if (ok ==false){
+			
+				try {
+					
+					
+					String sentenciaInicial = "INSERT INTO CLIENTE VALUES('ane', 'Ane Iturzaeta', 'Beasain', 'aneiturzaeta@opendeusto.es', 'ane')"; 
+					
+					String sentenciaInicial2= "INSERT INTO CLIENTE VALUES('leire', 'Leire Jauregi', 'Legazpi', 'leire.jauregi@opendeusto.es', 'leire')"; 
+							
+					
+				statement.executeUpdate(sentenciaInicial);
+				
+				statement.executeUpdate(sentenciaInicial2);
+				
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	
+		
+		}
+		
+		
+		else System.out.println("Tabla ya inicializada con usuario ane y leire, con las mismas contraseñas");
+	}
+
+	
+	private static  boolean comprobarInicializados() {
+		// TODO Auto-generated method stub
+		
+		boolean ok= false;
 		
 		try {
+		
+			String query = "SELECT NOMBREUSUARIO FROM CLIENTE WHERE NOMBREUSUARIO = 'ane'";
+				
+			ResultSet rs = statement.executeQuery (query);
 			
+			String nombre = rs.getString(1);
 			
-			String sentenciaInicial = "INSERT INTO CLIENTE VALUES('ane', 'Ane Iturzaeta', 'Beasain', 'aneiturzaeta@opendeusto.es', 'ane')"; 
+			if (nombre.equals("ane")){
+				
+				ok = true;
 			
-			String sentenciaInicial2= "INSERT INTO CLIENTE VALUES('leire', 'Leire Jauregi', 'Legazpi', 'leire.jauregi@opendeusto.es', 'leire')"; 
 					
+			}
 			
-		statement.executeUpdate(sentenciaInicial);
-		
-		statement.executeUpdate(sentenciaInicial2);
-		
+			rs.close();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 		
+		
+		
+		
+		return ok;
 	}
 	
 	
 	//GESTION DE NUESTRA BASE DE DATOS
 	
 	
+
+
 	public static void insertarCliente (Cliente cliente){ //se le llamara desde Registro de clientes
 		
 		
@@ -175,7 +216,7 @@ public class BaseDeDatos {
 		
 
 		try {
-			String Query = "INSERT INTO CLIENTE VALUES( ' " + nombreUsuario + " ', ' " + nombre + " ', ' " + ciudad + " ', ' " + email + " ', ' " + contra + " ')";
+			String Query = "INSERT INTO CLIENTE VALUES( '" + nombreUsuario + "', '" + nombre + "', '" + ciudad + "', '" + email + "', '" + contra + "')";
 			
 
 			statement.executeUpdate(Query);
@@ -189,89 +230,12 @@ public class BaseDeDatos {
 	}
 	
 	
-//	public void insertarProductoRopa (Producto producto, Ropa ropa) { 
-//		
-//		int codigo = producto.getCodigo();
-//		String nombre = producto.getNombre();
-//		String descripcion = producto.getDescripcion();
-//		int precio = producto.getPrecio();
-//		String talla = ropa.getTalla();
-//		String material = ropa.getMaterial();
-//		String estilo = ropa.getEstilo();
-//		//int existencias = producto.getExistencias();
-//		//int tipoProducto = producto.getTipoProducto();
-//		
-//		
-//		//Ya sabemos estos datos, por lo que meterlos a mano
-//		try {
-//			
-//		statement.executeUpdate( "insert into productoRopa values (01, 'Jersey', 'Azul. Cuello redondo', 20,'L', 'Algodon', 'Hipster')");
-//		statement.executeUpdate( "insert into productoRopa values (02, 'Jersey', 'Verde. Cuello redondo', 20, 'S', 'Algodon', 'Hipster')");
-//		statement.executeUpdate( "insert into productoRopa values (03, 'Jersey', 'Rojo. Cuello redondo', 20, 'L', 'Algodon', 'Hipster')");
-//		statement.executeUpdate( "insert into productoRopa values (04, 'Jersey', 'Azul. Cuello redondo', 20, 'L', 'Algodon', 'Hipster')");
-//		
-//
-//		} 
-//		catch (SQLException ex) {
-//        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
-//    }
-//		
-//				
-//		try {
-//			String Query = "INSERT INTO ropa VALUES("
-//	                + " ' " + codigo + " ', "
-//	                + " ' " + descripcion + " ', "
-//	                + " ' " + ciudad + " ', "
-//	                + " ' " + email + " ', "
-//	                + " ' " + contra + " ')";
-//	        Statement st = connection.createStatement();
-//	        st.executeUpdate(Query);
-//	        JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
-//	        
-//			} catch (SQLException ex) {
-//	        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
-//	    }
-//		
-//	}
-//	
-//public void insertarProductoComplemento (Producto producto, Complemento complemento) { 
-//		
-//		int codigo = producto.getCodigo();
-//		String nombre = producto.getNombre();
-//		String descripcion = producto.getDescripcion();
-//		int precio = producto.getPrecio();
-//		String material = complemento.getMaterial();
-//		String origen = complemento.getOrigen();
-//		
-//		//int existencias = producto.getExistencias();
-//		//int tipoProducto = producto.getTipoProducto();
-//		
-//		
-//		//Ya sabemos estos datos, por lo que meterlos a mano
-//		
-//	
-//		try {
-//			
-//		statement.executeUpdate( "insert into productoComplemento values (11, 'Collar', 'Gargantilla', 10, 'Plata', 'Étnico')");
-//		statement.executeUpdate( "insert into productoComplemento values (12, 'Collar', 'Ópera', 16, 'Cuerdas', 'Hawaiano')");
-//		statement.executeUpdate( "insert into productoComplemento values (13, 'Bufanda', 'Negra', 19.5, 'Algodon', 'Australiano')");
-//		statement.executeUpdate( "insert into productoComplemento values (14, 'Pulsera', 'Brazalete', 40, 'Oro', 'Árabe')");
-//		
-//
-//		} 
-//		catch (SQLException ex) {
-//        JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
-//    }
-//		
-//	}
 	
-	
-	
-	public static void insertarPedido (String codigo, String nombreUsuario, String fecha){
+	public static void insertarPedido (String codigo, String fecha, String nombreusuario){
 		
 				
 		try {
-			String Query = "INSERT INTO PEDIDO VALUES('" + codigo + " ', ' "+ fecha + " ', '" + nombreUsuario + " ') " ;	       
+			String Query = "INSERT INTO PEDIDO VALUES('" + codigo + "', '"+ fecha + "', '" + nombreusuario + "') " ;	       
 
 			
 			statement.executeUpdate(Query);
@@ -401,30 +365,96 @@ public class BaseDeDatos {
 	}
 	
 	
-	public static ArrayList<Pedido> buscarPedidos(String nombreusuario){
+	public static List<List<String>> buscarPedidos(String nombreusuario){
 		
-		ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 		
 			try {
 								
+			System.out.println(nombreusuario);
 				
-			String query = "SELECT CODIGO, FECHA FROM PEDIDO WHERE NOMBREUSUARIO = " + "'"+  nombreusuario + "'";
+			String query = "SELECT * FROM PEDIDO WHERE NOMBREUSUARIO = " + "'"+  nombreusuario + "'";
 			
-			ResultSet rs;
+//			String query = "SELECT CODIGO, FECHA, NOMBREUSUARIO FROM PEDIDO WHERE NOMBREUSUARIO = 'ane'";
 			
-			rs = statement.executeQuery (query);
 			
-			while(rs.next())
-		     
-				{		       
+			ResultSet rs = statement.executeQuery (query);
+						
+			ResultSetMetaData metadata = rs.getMetaData();
+			int numcols = metadata.getColumnCount();
+			
+			List<List<String>> result = new ArrayList<>();  // List of list, one per row
+			
+			while (rs.next()) {
+			  
 				
-				Pedido pedido = new Pedido(rs.getString("CODIGO"),rs.getString("FECHA"), rs.getString("NOMBREUSUARIO"));
-				
-				pedidos.add(pedido);
-								
-				}	
+				List<String> row = new ArrayList<>(numcols); // new list per row
+			   
+				int i = 1;
+			    while (i <= numcols) {  // don't skip the last column, use <=
+			        row.add(rs.getString(i++));
+			    }
+			    result.add(row); // add it to the result
+			}
 			
-			rs.close();
+			if(result.isEmpty()){
+			
+			System.out.println("vaziooooooooooo");
+		}
+			
+			
+			
+//		    int i = 1;
+//		    
+//			    while (i <= numcols) {  // don't skip the last column, use <=
+//			        pedidos.add(rs.getString(i++));
+//			    }
+//			    pedidos.add(row); // add it to the result
+//			}
+//			
+//			
+//			while (rs.next()) {
+//			   
+//			    	Pedido pedido = new Pedido(rs.getString("CODIGO"), rs.getString("FECHA"), nombreusuario);
+//				
+//			        pedidos.add(pedido);
+//			    
+//			}
+//			
+//			
+//			
+//			System.out.println(rs);
+//			
+//			while(rs.next())
+//		     
+//				{		       
+//				
+//				Pedido pedido = new Pedido(rs.getString("CODIGO"),rs.getString("FECHA"), nombreusuario);
+//				
+//				System.out.println(rs.getString("CODIGO"));
+//				System.out.println(rs.getString("FECHA"));
+//				
+//				pedidos.add(pedido);
+//								
+//				}	
+//			
+//			rs.close();
+//			
+//			System.out.println("Datos de la BD");
+//			
+//			if(pedidos.isEmpty()){
+//				
+//				System.out.println("vaziooooooooooo");
+//			}
+//			
+//			for (Pedido pedido : pedidos){
+//				
+//				System.out.println(pedido.getCodigo());			
+//				
+//				
+//			}
+//			
+				
+			return result;
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -432,10 +462,9 @@ public class BaseDeDatos {
 			}
 		     
 			
-	return pedidos;
+	return null;
 		
-		
-		
+				
 	}
 		
 }

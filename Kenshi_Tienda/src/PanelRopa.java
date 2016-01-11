@@ -81,30 +81,26 @@ public class PanelRopa extends JPanel implements ActionListener {
 			
 						
 		table = new JTable(datos, columnas);
-		table.setBounds(34, 100, 389, 180);
 		
-		table.getColumn("Codigo").setPreferredWidth(25);
+		
+		table.getColumn("Codigo").setPreferredWidth(50);
 		table.getColumn("Nombre").setPreferredWidth(70);
-		table.getColumn("Descripcion").setPreferredWidth(180);
-		table.getColumn("Precio").setPreferredWidth(35);
-		table.getColumn("Talla").setPreferredWidth(20);
+		table.getColumn("Descripcion").setPreferredWidth(160);
+		table.getColumn("Precio").setPreferredWidth(50);
+		table.getColumn("Talla").setPreferredWidth(50);
+		table.getColumn("Material").setPreferredWidth(90);
+		table.getColumn("Estilo").setPreferredWidth(60);
 		setLayout(null);
 		
-//		JScrollPane tableContainer = new JScrollPane(table);
-//
-//		this.add(tableContainer, BorderLayout.CENTER);
+		
+		JScrollPane scrollp = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollp.setSize(395, 200);
+		scrollp.setLocation(22, 101);
+		
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);		
+		
+		this.add(scrollp, BorderLayout.WEST);
 					
-		
-//		table.setEnabled(false);
-
-		
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);	
-
-		
-		this.add(table);
-		
-//		this.add(tableContainer);
-		
 		
 		
 		textRopa = new JLabel();
@@ -115,7 +111,7 @@ public class PanelRopa extends JPanel implements ActionListener {
 		add(textRopa);
 		
 		Añadir = new JButton("Añadir Producto");
-		Añadir.setBounds(106, 300, 200, 23);
+		Añadir.setBounds(106, 330, 200, 23);
 		Añadir.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		Añadir.setContentAreaFilled(false);
 		Añadir.setBorderPainted(false);
