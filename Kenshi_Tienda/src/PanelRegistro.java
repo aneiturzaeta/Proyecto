@@ -226,7 +226,7 @@ setLayout(null);
 		
 	}
 
-	private int comprobarUsuario() throws ExcepUsuario{
+	int comprobarUsuario() throws ExcepUsuario{
 		// TODO Auto-generated method stub
 		if(Usuario.getText()==""){
 			
@@ -238,7 +238,7 @@ setLayout(null);
 		
 		return existe;
 		
-		
+		 
 		//mirar tambien si existe el nombre de usuario
 	}
 	

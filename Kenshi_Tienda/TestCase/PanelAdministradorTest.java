@@ -48,23 +48,21 @@ public class PanelAdministradorTest extends TestCase{
 		assertNotNull(pAdmin);
 		
 	}
-	
-	@Test
-	public void testEquals() {
-		
-		//Podemos hacer con usuario o contraseña
-	}
+
 
 	@Test (expected = ExcepAdminKo.class)
 	public void testComprobarContra() throws ExcepAdminKo {
 		
 		pAdmin = new PanelAdministrador();
 		
-		//pAdmin.comprobarContra(contraseña1);
+
+
 		
 		pAdmin.comprobarContra(contraseña2);
 				
 	}
+	
+
 	
 	
 }
