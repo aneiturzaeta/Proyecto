@@ -201,7 +201,6 @@ setLayout(null);
 		}
 				
 		
-		//aqui se añadira un nuevo usuario a la base de datos					
 			
 		break;
 		}
@@ -222,7 +221,7 @@ setLayout(null);
 		return existe;
 		
 		 
-		//mirar tambien si existe el nombre de usuario
+		
 	}
 	
 	

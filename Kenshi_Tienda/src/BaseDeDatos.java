@@ -92,25 +92,7 @@ public class BaseDeDatos {
 		
 	}
 	
-/*	public void getValues(String table_name) {
-        try {
-            String Query = "SELECT * FROM " + table_name;
-            Statement st = connection.createStatement();
-            java.sql.ResultSet resultSet;
-            resultSet = st.executeQuery(Query);
- 
-            while (resultSet.next()) {
-                System.out.println("Codigo: " + resultSet.getString("Codigo") + " "
-                        + "Nombre: " + resultSet.getString("Nombre") + " " + resultSet.getString("Apellido") + " "
-                        + "Ciudad: " + resultSet.getString("Ciudad"));
-            }
- 
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
-            
-            //Si aqui sale error se crea la tabla, si no no 
-        }
-    }*/
+
 	
 	public static void crearTablaBD() {
 		if (statement==null) return;

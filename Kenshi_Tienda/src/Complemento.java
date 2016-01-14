@@ -8,8 +8,8 @@ public class Complemento extends Producto  {
 	
 	
 	
-	public Complemento(String material, String origen) {
-		super();
+	public Complemento(String codigo, String nombre, String descripcion, String precio, String material, String origen) {
+		super(codigo, nombre, descripcion, precio);
 		this.material = material;
 		this.origen = origen;
 	}

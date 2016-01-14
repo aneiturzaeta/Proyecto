@@ -18,10 +18,6 @@ public class PanelAdministradorTest extends TestCase{
 	private String contraseña2;
 	
 	
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
 
 	
 	@Before

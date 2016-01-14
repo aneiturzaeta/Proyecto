@@ -12,10 +12,12 @@ public class PanelRegistroTest extends TestCase{
 
 	private PanelRegistro pRegis ;
 	private String nombreUsuario ;
+	private PanelRopa pRopa ;
 	
 	private Cliente cliente ;
 	
 	private Cliente sesion;
+	private Cliente sesion1;
 	
 	
 	
@@ -23,6 +25,7 @@ public class PanelRegistroTest extends TestCase{
 	 public void setUp() throws Exception {
 		
 		pRegis = new PanelRegistro();
+		pRopa = new PanelRopa();
 		
 		nombreUsuario = "";
 			
@@ -48,30 +51,13 @@ public class PanelRegistroTest extends TestCase{
 		
 		pRegis.pasarSesion(sesion);
 		
-	}
-	
-	
-	
-	
-	/*
-	@Test 
-	public void testComprobarUsuario( String nombreUsuario) {
+		pRopa.pasarSesion(sesion1);
 		
-		BaseDeDatos.comprobarUsuario (nombreUsuario);
-		
-		
-		if(BaseDeDatos.insertarCliente(cliente.getNombreusuario());
-		
-
-		
-	}*/
-	
-	@Test
-	public void testUsuario() {
-		
-		assertEquals(cliente.getNombreusuario (), "ane");
+		assertEquals(sesion1, sesion);
 		
 	}
+	
+	
 	
 	
 	

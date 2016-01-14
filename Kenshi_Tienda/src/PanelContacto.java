@@ -13,10 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 //mail
+
 
 
 import java.util.Properties;
@@ -81,7 +83,10 @@ public class PanelContacto extends JPanel implements ActionListener{
 		Cuerpo.setBackground(Color.WHITE);
 		Cuerpo.setEditable(true);
 		Cuerpo.setBounds(50, 10+110, 300, 250);
-		add(Cuerpo);
+		
+		JScrollPane sp = new JScrollPane (Cuerpo);
+		sp.setBounds(50, 10+110, 300, 250);
+		add(sp);
 		
 		BEnviar = new JButton("Enviar");
 		BEnviar.setSize(100, 32);

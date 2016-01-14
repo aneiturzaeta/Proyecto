@@ -1,4 +1,3 @@
-/BaseDeDatos.class
 /Cliente.class
 /Complemento.class
 /DatoParaTabla.class
@@ -14,7 +13,6 @@
 /MiTableModel.class
 /PanelAdminExtra.class
 /PanelAdministrador.class
-/PanelAdministradorTest.class
 /PanelCarro.class
 /PanelCarroExtra.class
 /PanelComplemento.class
@@ -26,7 +24,6 @@
 /PanelImagen.class
 /PanelRegistro.class
 /PanelRegistroExtra.class
-/PanelRegistroTest.class
 /PanelRopa.class
 /Pedido.class
 /Producto.class

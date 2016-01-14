@@ -299,37 +299,6 @@ public class PanelRopa extends JPanel implements ActionListener {
 
 
 
-//	@Override
-//	public void valueChanged(ListSelectionEvent event) {
-//		// TODO Auto-generated method stub
-//		
-//		if( event.getSource() == table.getSelectionModel()
-//				&& event.getFirstIndex() >= 0 )
-//		{
-//		
-////        if (table.getSelectedRow() > -1) {
-//	           
-//        	//codigo producto
-//        	codigoSeleccion = table.getValueAt(table.getSelectedRow(), 0).toString(); //imprime el codigo del producto seleccionado
-//            System.out.println(codigoSeleccion);
-//        	
-//            //nombreusuario
-//            
-//            nombreusuario = sesion.getNombreusuario();
-//            
-//            
-//            //fecha
-//            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-//            Date fechaDate = Calendar.getInstance().getTime();        
-//            fecha = df.format(fechaDate);
-//            
-//            	 
-//            seleccionado = 1;
-// 
-//        }
-  
-
-
 }
 		
 

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -17,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 
 public class PanelComplemento extends JPanel implements ActionListener{
@@ -36,6 +39,8 @@ public class PanelComplemento extends JPanel implements ActionListener{
     String nombreusuario;
     String fecha;
     
+    int seleccionado= 0;
+    
 	
 	public PanelComplemento() {
 
@@ -45,15 +50,8 @@ public class PanelComplemento extends JPanel implements ActionListener{
 		 */
 			
 			setBackground(SystemColor.activeCaption);
-			setLayout(null);
 			
-			
-			
-			String[] columnas = {"Codigo","Nombre", "Descripcion", "Precio",  "Material", "Origen"};
-			
-			
-			//se cargan desde la BD. 
-			//se cogen si tipoProducto = 1;
+					
 			Object[][] datos = { 
 					
 					{"11", "Collar", "Gargantilla", 10+" €", "Plata", "Etníco"},
@@ -63,19 +61,64 @@ public class PanelComplemento extends JPanel implements ActionListener{
 			};	
 			
 			
-			table = new JTable(datos, columnas);
-						
-			table.getColumn("Codigo").setPreferredWidth(50);
+			table = new JTable();
+			
+			DefaultTableModel model = new DefaultTableModel();
+			 
+			table.setModel(model);
+			
+
+			String[] columnas = {"Codigo","Nombre", "Descripcion", "Precio",  "Material", "Origen"};
+			
+			model.setColumnIdentifiers(columnas);
+			
+
+			 ArrayList <Complemento> complementos = new ArrayList<Complemento>();
+			 
+			 
+			 complementos.add(new Complemento("Complemento1", "Collar", "Gargantilla", 10+" €", "Plata", "Etníco"));
+			 complementos.add(new Complemento("Complemento2", "Collar", "Gargantilla", 40+" €", "Oro", "Etníco"));
+			 complementos.add(new Complemento("Complemento3", "Collar", "Ópera", 19+" €", "Cuerdas", "Hawaiano"));
+			 complementos.add(new Complemento("Complemento4", "Collar", "Ópera", 10+" €", "Cuerdas", "Etníco"));
+			 complementos.add(new Complemento("Complemento5", "Bufanda", "Negra", 19+" €", "Algodón", "Australiano"));
+			 complementos.add(new Complemento("Complemento6", "Bufanda", "Azul", 20+" €", "Algodón", "Australiano"));
+			 complementos.add(new Complemento("Complemento7", "Bufanda", "Azul marino", 20+" €", "Lana", "Etníco"));
+			 complementos.add(new Complemento("Complemento8", "Pulsera", "Brazalete", 40+" €", "Plata", "Árabe"));
+			 complementos.add(new Complemento("Complemento9", "Pulsera", "Brazalete", 45+" €", "Oro", "Árabe"));
+			
+			 for ( Complemento complemento : complementos){
+				   
+				 String codigo = complemento.getCodigo();
+				 String nombre = complemento.getNombre();
+				 String descripcion = complemento.getDescripcion();
+				 String precio = complemento.getPrecio();
+				 String material = complemento.getMaterial();
+				 String origen = complemento.getOrigen();
+				 
+			   
+			model.addRow(new Object[]{codigo, nombre, descripcion, precio, material, origen});	
+			
+			 }
+			 
+			 
+			table.getColumn("Codigo").setPreferredWidth(100);
 			table.getColumn("Nombre").setPreferredWidth(70);
 			table.getColumn("Descripcion").setPreferredWidth(160);
 			table.getColumn("Precio").setPreferredWidth(50);
 			table.getColumn("Material").setPreferredWidth(90);
 			table.getColumn("Origen").setPreferredWidth(60);
+			setLayout(null);
 			
 						
 			JScrollPane scrollp = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scrollp.setSize(395, 200);
 			scrollp.setLocation(22, 101);
+			
+			
+			
+			TableRowSorter <DefaultTableModel> ordenarFilas = new TableRowSorter<DefaultTableModel>(model);
+			table.setRowSorter(ordenarFilas);
+			
 			
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);		
 			
