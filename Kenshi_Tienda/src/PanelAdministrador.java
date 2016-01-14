@@ -1,3 +1,4 @@
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +22,10 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 	private JTextField passAdmin;
 	private JLabel textPassAdmin;
 	private JButton BAdminEntrar;
+	
+	private JButton Bsesion;
+	
+	private JButton Bverificar;
 
 	private int fallos = 0;
 	private int maxFallos = 3;
@@ -59,7 +64,27 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 		BAdminEntrar.setBorderPainted(false);
 		add(BAdminEntrar);
 		
-			
+		
+		Bsesion = new JButton("Cerrar sesion de administrador");
+		Bsesion.setSize(300, 32);
+		Bsesion.setLocation(56, 250);
+		Bsesion.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		Bsesion.addActionListener(this);
+		Bsesion.setActionCommand("Sesion");
+		Bsesion.setContentAreaFilled(false);
+		Bsesion.setBorderPainted(false);
+		
+		
+		Bverificar = new JButton(new ImageIcon( PanelAdministrador.class.getResource("img/tick.png"))); //añadimos un boton
+		Bverificar.setSize(100, 100);
+		Bverificar.addActionListener(this);
+		Bverificar.setLocation(156, 84);
+		Bverificar.setActionCommand("Verificar");
+		Bverificar.setOpaque(true);
+		Bverificar.setContentAreaFilled(false);
+		Bverificar.setBorderPainted(false);
+		
+		
 		
 	}
 
@@ -72,52 +97,111 @@ public class PanelAdministrador extends JPanel implements ActionListener {
 			case "Entrar":
 				
 				String contra = passAdmin.getText();
-								
-								
-			try {
 				
-				comprobarContra (contra);
+				
+				
+			if (sesion != null){
+				
+				JOptionPane.showMessageDialog(this, "Primero cierra la sesion de usuario");
 			
-				fallos = 0;
-				
-				this.setVisible(false);
-				
-				
-				
-				/*PanelGestionAdministrador panelGestionAdmin = new PanelGestionAdministrador ();
-				panelGestionAdmin.setPreferredSize( new Dimension( 800,125 ) );
-				panelGestionAdmin.setBackground(SystemColor.activeCaption);
-				ventanaPrincipal.add(panelGestionAdmin, BorderLayout.CENTER);*/
-			
+				this.remove(passAdmin);
+				this.remove(textPassAdmin);
+				this.remove(BAdminEntrar);
 						
+				passAdmin.setText("");
+				passAdmin.repaint();
+			
+				this.repaint();
 				
 			}
 				
-			catch (ExcepAdminKo e1) {
-			
-					fallos ++;
 				
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(this, e1.Informar(maxFallos, fallos));
-					
-					if (fallos == maxFallos){
+			else {	
+								
+					try {
 						
+						comprobarContra (contra);
+					
+						fallos = 0;
+						
+						//ha entrado bien
 							
-					this.remove(passAdmin);
-					this.remove(textPassAdmin);
-					this.remove(BAdminEntrar);
-							
-					this.repaint();
+						JOptionPane.showMessageDialog(this, "Has entrado como administrador");
+						
+						
+						this.add(Bsesion);
+						this.add(Bverificar);
+						
+						this.remove(passAdmin);
+						this.remove(textPassAdmin);
+						this.remove(BAdminEntrar);
+								
+						passAdmin.setText("");
+						passAdmin.repaint();
+						
+						this.repaint();
+						
 						
 					}
+						
+					catch (ExcepAdminKo e1) {
 					
-					passAdmin.setText("");
-					passAdmin.repaint();
+							fallos ++;
+						
+							// TODO Auto-generated catch block
+							JOptionPane.showMessageDialog(this, e1.Informar(maxFallos, fallos));
+							
+							if (fallos == maxFallos){
+								
+									
+							this.remove(passAdmin);
+							this.remove(textPassAdmin);
+							this.remove(BAdminEntrar);
+									
+							this.repaint();
+								
+							}
+							
+							passAdmin.setText("");
+							passAdmin.repaint();
+					}
+			
 			}
-					
+			
 			break;	
-			}
+			
+		
+		
+		case "Verificar":
+		
+				JOptionPane.showMessageDialog(this, "PROGRAMA VERIFICADO POR ADMINISTRADOR/A");
+			
+		
+				this.remove(Bverificar);
 				
+				this.repaint();
+				
+			break;
+			
+			
+		case "Sesion":
+			
+			JOptionPane.showMessageDialog(this, "SESION DE ADMINISTRADOR/A CERRADA");
+					
+			this.add(passAdmin);
+			this.add(textPassAdmin);
+			this.add(BAdminEntrar);
+				
+			this.remove(Bverificar);
+			this.remove(Bsesion);
+			
+			this.repaint();
+
+			
+			break;
+		
+		
+		}
 				
 	}
 					

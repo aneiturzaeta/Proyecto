@@ -4,8 +4,11 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,16 +21,16 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 
-public class PanelCarro extends JPanel implements ActionListener{
+public class PanelCarro extends JPanel {
 
 	
 	private JTable table;
 	private JLabel textComplemento;
 	
-	private JButton bBorrar;
-	
-	 
+
 	private Cliente sesion;
+	
+	
 	
 	public PanelCarro (){
 			
@@ -45,45 +48,12 @@ public class PanelCarro extends JPanel implements ActionListener{
 			textComplemento.setForeground(Color.BLACK);
 			textComplemento.setBounds(60, 23, 280, 20);
 			add(textComplemento);
-			
-			bBorrar = new JButton("Borrar todos los pedidos");
-			bBorrar.setSize(250, 32);
-			bBorrar.setLocation(70, 380);
-			bBorrar.setFont(new Font("Century Gothic", Font.BOLD, 16));
-			bBorrar.addActionListener(this);
-			bBorrar.setActionCommand("Borrar");
-			bBorrar.setContentAreaFilled(false);
-			bBorrar.setBorderPainted(false);
-			add(bBorrar);
-	
+		
 			
 			
 			}
 			
-			
-			
-	
 
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-		switch(e.getActionCommand()){
-		
-		case "Borrar":
-			
-			
-			BaseDeDatos.borrarPedidos(sesion);
-			
-			
-			
-			break;
-		
-		}
-		
-		
-	}
 
 	
 	public void sacarPedidos(){
@@ -93,13 +63,9 @@ public class PanelCarro extends JPanel implements ActionListener{
 		
 		
 		
-		List<List<String>> pedidos = new ArrayList<>();
-		
-		
+			
 		if (sesion.getNombreusuario().equals("")){
-			
-			
-			this.remove(bBorrar);
+
 			
 			JOptionPane.showMessageDialog(this, "Primero inicia sesion. No hay cesta que mostrar");	
 		
@@ -111,37 +77,29 @@ public class PanelCarro extends JPanel implements ActionListener{
 		
 		System.out.println(sesion.getNombreusuario());
 			
-		pedidos = BaseDeDatos.buscarPedidos(sesion.getNombreusuario());
+		ResultSet rs = null;
+				
+		rs = BaseDeDatos.buscarPedidos(sesion.getNombreusuario());
 		
 		
-			if (pedidos.isEmpty()){
+			if (rs == null){
 				
 				JOptionPane.showMessageDialog(this, "No hay pedidos de este usuario");	
-				
-				
-				
-				this.remove(bBorrar);
 				
 			}
 			
 			else {
 				
-				
+					table = new JTable();
 			
 					String[] columnas = {"Codigo Producto","Fecha"};
-					
-//					Object[][] datos = {{"", ""}};
-					
-					//se cargan desde la BD. 
-				
-					table = new JTable();
-					
+	
+									
 					
 					table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);		
 					
 					table.setEnabled(false);				
-					
-					
+								
 					
 					
 					  DefaultTableModel model = new DefaultTableModel();
@@ -152,27 +110,42 @@ public class PanelCarro extends JPanel implements ActionListener{
 					  table.getColumn("Codigo Producto").setPreferredWidth(120);
 					  table.getColumn("Fecha").setPreferredWidth(120);
 					  
-					  
-					for (List<String> p : pedidos) {
+					 					  
+					try{
+						
+						while (rs.next()){
+						
+//						for (List<String> p : pedidos) {
+					
 						  
 							
-							String codigo = p.get(0);
-							String fecha = p.get(1);
+							String codigo = rs.getString("CODIGO");
+							String fecha = rs.getString("FECHA");
 							   
 							//hay que ir metiendo fila por fila todas las entradas. 1 entrada = 1 pedido
 							
 							
 							model.addRow(new Object[]{codigo, fecha});	
-						  					  
-			
+						  
+							
+						}
+						
+						
+					}catch (Exception e){
+						
+							
 						
 					}
 					
 					JScrollPane scrollp = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-					scrollp.setSize(270, 120);
+					scrollp.setSize(270, 200);
 					scrollp.setLocation(52, 101);
 					
 					this.add(scrollp, BorderLayout.WEST);	
+					
+					table.repaint();
+					
+//					this.repaint();
 					
 //					table = new JTable(datos, columnas);
 					
@@ -188,8 +161,7 @@ public class PanelCarro extends JPanel implements ActionListener{
 //															
 //						}
 	
-	
-		
+							
 		}	
 			
 		}

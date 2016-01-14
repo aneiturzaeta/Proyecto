@@ -183,22 +183,25 @@ public class PanelContacto extends JPanel implements ActionListener{
 			generateMailMessage.setSubject(asunto);
 			
 			String nombreUsuario;
+			String emailUsuario;
 					
 			if (sesion.getNombreusuario()!= "" && !sesion.getNombreusuario().isEmpty()){
 				
 				nombreUsuario= sesion.getNombreusuario();
+				emailUsuario = sesion.getEmail();
 							
 			}
 			
 			else {
 				
 				nombreUsuario = "Anonimo";
+				emailUsuario = "Desconocido";
 				
 			}
 			
 			
 			
-			String emailBody = cuerpo + "      Email mandado desde el usuario: " + nombreUsuario + ".      Este email esta mandado por la aplicacion de Ane y Leire";
+			String emailBody = cuerpo + "      Email mandado desde el usuario: " + nombreUsuario + "   con email    : " + emailUsuario + ".      Este email esta mandado por la aplicacion de Ane y Leire";
 			generateMailMessage.setContent(emailBody, "text/html");
 			System.out.println("Mail Session has been created successfully..");
 	 

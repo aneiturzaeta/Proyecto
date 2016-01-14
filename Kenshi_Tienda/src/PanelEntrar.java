@@ -123,6 +123,17 @@ setLayout(null);
 					sesion.setContraseña(contraseña);
 									
 					
+					//llamar a la funcion get usuario
+					
+					Cliente cliente = BaseDeDatos.sacarCliente(usuario);
+					
+					sesion.setNombreapellido(cliente.getNombreapellido());
+					sesion.setEmail(cliente.getEmail());
+					sesion.setCiudad(cliente.getCiudad());
+					
+					System.out.println(cliente.getEmail());
+					
+					
 					JOptionPane.showMessageDialog(this, "Has iniciado sesion correctamente con nombre de usuario " + usuario);
 					
 					Contraseña.setText("");
@@ -132,7 +143,9 @@ setLayout(null);
 					
 				}
 				
-				else JOptionPane.showMessageDialog(this, "Error en la contraseña o nombre de usuario");				
+				else { 
+					
+				JOptionPane.showMessageDialog(this, "Error en la contraseña o nombre de usuario");				
 					
 				Contraseña.setText("");
 				Usuario.setText("");
@@ -140,6 +153,7 @@ setLayout(null);
 							
 				this.repaint();				
 				
+				}
 			}
 			
 			

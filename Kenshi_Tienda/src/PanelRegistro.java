@@ -161,26 +161,6 @@ setLayout(null);
 		try {
 			
 			int existe = comprobarUsuario();
-		
-//			LLamada a BD
-//			int numeroUsuarios = numeroUsuarios(); 
-				
-//			for (int i= 0; i<numeroUsuarios; i++){
-//				
-//				if (nombre.equalsTo(comprobarNombreUsuario(i))){
-//					
-//					JOptionPane.showMessageDialog(this, "Ya existe ese nombre de usuario");
-//					
-			
-//				}
-				
-				
-//			else 
-			
-//			insertar el usuario a la BD
-//			usuarioNuevo(usuario);
-				
-//			JOptionPane.showInputDialog("Entrado bien");
 			
 	
 		if (existe== 0){ //que no haya uno igual, procede a guardarlo en BD
@@ -201,6 +181,9 @@ setLayout(null);
 		else if (existe ==1){
 			
 			JOptionPane.showMessageDialog(this,"Ya existe ese nombre de usuario" );
+			
+			Contraseña.setText("");
+			Usuario.setText("");
 			
 		
 		}

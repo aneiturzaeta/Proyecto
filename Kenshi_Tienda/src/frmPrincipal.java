@@ -420,12 +420,13 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			panelCarroExtra.setBackground(SystemColor.activeCaption);
 			this.add(panelCarroExtra, BorderLayout.WEST);
 			
-			panelCarro.setPreferredSize (new Dimension (430, 500));
-			panelCarro.setBackground(SystemColor.activeCaption);
-			
 			panelCarro.pasarSesion(sesion);
 			panelCarro.sacarPedidos();
+//			panelCarro.repaint();
 			
+			panelCarro.setPreferredSize (new Dimension (430, 500));
+			panelCarro.setBackground(SystemColor.activeCaption);
+					
 			this.add(panelCarro, BorderLayout.EAST);
 			
 			panelAdmin.setVisible(false);
@@ -473,6 +474,25 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 		case "Logout":
 			
+			panelAdmin.setVisible(false);
+			panelAdminExtra.setVisible(false);
+			
+			panelRegis.setVisible(false);
+			panelRegisExtra.setVisible(false);
+			panelCont.setVisible(false);
+			panelContExtra.setVisible(false);
+			panelCarro.setVisible(false);
+			panelCarroExtra.setVisible(false);
+			panelEntrar.setVisible(false);
+			panelEntrarExtra.setVisible(false);
+			
+				
+			panelRopa.pasarSesion(sesion);
+			panelRopa.setVisible(true);
+						
+			panelComplemento.pasarSesion(sesion);
+			panelComplemento.setVisible(true);
+			
 			sesion.setNombreusuario("");
 			sesion.setNombreapellido("");
 			sesion.setCiudad("");
@@ -481,7 +501,7 @@ public class frmPrincipal extends JFrame implements ActionListener{
 			
 			JOptionPane.showMessageDialog(this, "Sesión cerrada");
 			
-		
+			break;
 		}
 	}
 

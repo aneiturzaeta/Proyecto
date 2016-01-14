@@ -282,7 +282,7 @@ public class BaseDeDatos {
 				
 		try {
 			
-			ResultSet rs = statement.executeQuery ("SELECT NOMBREUSUARIO FROM USUARIO");
+			ResultSet rs = statement.executeQuery ("SELECT NOMBREUSUARIO FROM CLIENTE");
 		     
 			while(rs.next())
 		     
@@ -364,97 +364,82 @@ public class BaseDeDatos {
 		return ok;
 	}
 	
+public static Cliente sacarCliente(String nombreusuario){
+		
+		
+	Cliente cliente = new Cliente("","","","","");
+		
+		try {
+			
+			String query = "SELECT * FROM CLIENTE WHERE NOMBREUSUARIO = '" +nombreusuario+"'" ;
+			
+			ResultSet rs = statement.executeQuery (query);
+		     
+			while(rs.next())
+		     
+				{
+		        
+				cliente = new Cliente (rs.getString("NOMBREUSUARIO"),rs.getString("NOMBREAPELLIDO"), rs.getString("CIUDAD"), rs.getString("EMAIL"), rs.getString("CONTRASEÑA"));
+				
+				return cliente;
+				
+		      }	
+		rs.close();
+		}
+		
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			
+			JOptionPane.showMessageDialog(null, "No se ha podido realizar operacion SQL");
+			
+		}
+		
+		return cliente;
+	}
 	
-	public static List<List<String>> buscarPedidos(String nombreusuario){
+	
+	
+	
+	
+	
+	public static ResultSet buscarPedidos(String nombreusuario){
 		
-		
+	
 			try {
 								
 			System.out.println(nombreusuario);
 				
 			String query = "SELECT * FROM PEDIDO WHERE NOMBREUSUARIO = " + "'"+  nombreusuario + "'";
 			
-//			String query = "SELECT CODIGO, FECHA, NOMBREUSUARIO FROM PEDIDO WHERE NOMBREUSUARIO = 'ane'";
-			
-			
+		
 			ResultSet rs = statement.executeQuery (query);
 						
-			ResultSetMetaData metadata = rs.getMetaData();
-			int numcols = metadata.getColumnCount();
-			
-			List<List<String>> result = new ArrayList<>();  // List of list, one per row
-			
-			while (rs.next()) {
-			  
-				
-				List<String> row = new ArrayList<>(numcols); // new list per row
-			   
-				int i = 1;
-			    while (i <= numcols) {  // don't skip the last column, use <=
-			        row.add(rs.getString(i++));
-			    }
-			    result.add(row); // add it to the result
-			}
-			
-			if(result.isEmpty()){
-			
-			System.out.println("vaziooooooooooo");
-		}
-			
-			
-			
-//		    int i = 1;
-//		    
-//			    while (i <= numcols) {  // don't skip the last column, use <=
-//			        pedidos.add(rs.getString(i++));
-//			    }
-//			    pedidos.add(row); // add it to the result
-//			}
+//			ResultSetMetaData metadata = rs.getMetaData();
+//			int numcols = metadata.getColumnCount();
 //			
+//			List<List<String>> result = new ArrayList<>();  // List of list, one per row
 //			
 //			while (rs.next()) {
+//			  
+//				
+//				List<String> row = new ArrayList<>(numcols); // new list per row
 //			   
-//			    	Pedido pedido = new Pedido(rs.getString("CODIGO"), rs.getString("FECHA"), nombreusuario);
-//				
-//			        pedidos.add(pedido);
-//			    
+//				int i = 1;
+//			    while (i <= numcols) {  // don't skip the last column, use <=
+//			        row.add(rs.getString(i++));
+//			    }
+//			    result.add(row); // add it to the result
 //			}
 //			
+//			if(result.isEmpty()){
 //			
+//			System.out.println("vacio");
+//		}
 //			
-//			System.out.println(rs);
-//			
-//			while(rs.next())
-//		     
-//				{		       
-//				
-//				Pedido pedido = new Pedido(rs.getString("CODIGO"),rs.getString("FECHA"), nombreusuario);
-//				
-//				System.out.println(rs.getString("CODIGO"));
-//				System.out.println(rs.getString("FECHA"));
-//				
-//				pedidos.add(pedido);
-//								
-//				}	
-//			
-//			rs.close();
-//			
-//			System.out.println("Datos de la BD");
-//			
-//			if(pedidos.isEmpty()){
-//				
-//				System.out.println("vaziooooooooooo");
-//			}
-//			
-//			for (Pedido pedido : pedidos){
-//				
-//				System.out.println(pedido.getCodigo());			
-//				
-//				
-//			}
-//			
+			
+//			rs.close();	
 				
-			return result;
+			return rs;
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

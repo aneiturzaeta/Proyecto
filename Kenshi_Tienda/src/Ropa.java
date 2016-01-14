@@ -8,8 +8,8 @@ public class Ropa extends Producto {
 	
 	
 	
-	public Ropa(String talla, String material, String estilo) {
-		super();
+	public Ropa(String codigo, String nombre, String descripcion, String precio, String talla, String material, String estilo) {
+		super(codigo, nombre, descripcion, precio);
 		this.talla = talla;
 		this.material = material;
 		this.estilo = estilo;

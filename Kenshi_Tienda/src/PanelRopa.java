@@ -8,6 +8,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import java.awt.BorderLayout;
 import java.awt.SystemColor;
@@ -24,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -56,12 +59,7 @@ public class PanelRopa extends JPanel implements ActionListener {
 	public PanelRopa() {
 		
 		setBackground(SystemColor.activeCaption);
-		
-		String[] columnas = {"Codigo","Nombre", "Descripcion", "Precio",  "Talla", "Material", "Estilo"};
 	
-		
-		//se cargan desde la BD. 
-		//se cogen si tipoProducto = 0;
 		Object[][] datos = { 
 				
 				{"01", "Jersey", "Azul. Cuello redondo", 20+" €",  "L", "Terciopelo", "Hipster"},
@@ -80,12 +78,64 @@ public class PanelRopa extends JPanel implements ActionListener {
 		
 			
 						
-		table = new JTable(datos, columnas);
+		table = new JTable();
+		
+		DefaultTableModel model = new DefaultTableModel();
+		 
+		table.setModel(model);
 		
 		
-		table.getColumn("Codigo").setPreferredWidth(50);
+		String[] columnas = {"Codigo","Nombre", "Descripcion", "Precio",  "Talla", "Material", "Estilo"};
+		
+		 model.setColumnIdentifiers(columnas);
+		 
+		
+		 ArrayList <Ropa> ropas = new ArrayList<Ropa>();
+		 
+		 ropas.add(new Ropa("ROPAjer1", "Jersey", "Azul. Cuello redondo", 20+" €",  "M", "Lana", "Hipster"));
+		 ropas.add(new Ropa("ROPAjer2", "Jersey", "Azul. Cuello redondo", 20+" €",  "L", "Lana", "Hipster"));
+		 ropas.add(new Ropa("ROPAjer3", "Jersey", "Verde. Cuello redondo", 20+" €",  "M", "Lana", "Hipster"));
+		 ropas.add(new Ropa("ROPAjer4", "Jersey", "Verde. Cuello redondo", 20+" €",  "L", "Lana", "Hipster"));
+		 ropas.add(new Ropa("ROPAjer5", "Jersey", "Negro. Cuello redondo", 20+" €",  "M", "Lana", "Hipster"));
+		 ropas.add(new Ropa("ROPAjer6", "Jersey", "Negro. Cuello redondo", 20+" €",  "L", "Lana", "Hipster"));
+		 
+		 ropas.add(new Ropa("ROPAcam1", "Camiseta", "Azul. Básica Hombre", 12+" €",  "S", "Algodón", "Hipster"));
+		 ropas.add(new Ropa("ROPAcam2", "Camiseta", "Azul. Básica Hombre", 12+" €",  "M", "Algodón", "Hipster"));
+		 ropas.add(new Ropa("ROPAcam3", "Camiseta", "Azul. Básica Hombre", 12+" €",  "L", "Algodón", "Hipster"));
+		 ropas.add(new Ropa("ROPAcam4", "Camiseta", "Gris. Básica Mujer", 10+" €",  "S", "Algodón", "Hipster"));
+		 ropas.add(new Ropa("ROPAcam5", "Camiseta", "Gris. Básica Mujer", 10+" €",  "M", "Algodón", "Hipster"));
+		 ropas.add(new Ropa("ROPAcam6", "Camiseta", "Gris. Básica Mujer", 10+" €",  "L", "Algodón", "Hipster"));
+		 ropas.add(new Ropa("ROPAcam7", "Camiseta", "Blanca con mensaje", 12+" €",  "U", "Algodón", "Hipster"));
+		 
+		 ropas.add(new Ropa("ROPAblu1", "Blusa", "Brillantes. Dorado", 15+" €",  "S", "Terciopelo", "Fiesta"));
+		 ropas.add(new Ropa("ROPAblu2", "Blusa", "Brillantes. Dorado", 15+" €",  "M", "Terciopelo", "Fiesta"));
+		 ropas.add(new Ropa("ROPAblu3", "Blusa", "Brillantes. Dorado", 15+" €",  "L", "Terciopelo", "Fiesta"));
+		 ropas.add(new Ropa("ROPAblu4", "Blusa", "Brillantes. Dorado", 15+" €",  "XL", "Terciopelo", "Fiesta"));
+		 ropas.add(new Ropa("ROPAblu5", "Blusa", "Blanca, detalles negros", 20+" €",  "S", "Lana", "Elegante"));
+		 ropas.add(new Ropa("ROPAblu6", "Blusa", "Blanca, detalles negros", 20+" €",  "M", "Lana", "Elegante"));
+		 ropas.add(new Ropa("ROPAblu7", "Blusa", "Blanca, detalles negros", 20+" €",  "L", "Lana", "Elegante"));
+		 ropas.add(new Ropa("ROPAblu8", "Blusa", "Blanca, detalles negros", 20+" €",  "XL", "Lana", "Elegante"));
+		 
+		 
+		 for ( Ropa ropa : ropas){
+		   
+			 String codigo = ropa.getCodigo();
+			 String nombre = ropa.getNombre();
+			 String descripcion = ropa.getDescripcion();
+			 String precio = ropa.getPrecio();
+			 String talla = ropa.getTalla();
+			 String material = ropa.getMaterial();
+			 String estilo = ropa.getEstilo();
+			 
+		   
+		model.addRow(new Object[]{codigo, nombre, descripcion, precio, talla, material, estilo});	
+		
+		 }
+
+		
+		table.getColumn("Codigo").setPreferredWidth(80);
 		table.getColumn("Nombre").setPreferredWidth(70);
-		table.getColumn("Descripcion").setPreferredWidth(160);
+		table.getColumn("Descripcion").setPreferredWidth(120);
 		table.getColumn("Precio").setPreferredWidth(50);
 		table.getColumn("Talla").setPreferredWidth(50);
 		table.getColumn("Material").setPreferredWidth(90);
@@ -94,8 +144,13 @@ public class PanelRopa extends JPanel implements ActionListener {
 		
 		
 		JScrollPane scrollp = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollp.setSize(395, 200);
-		scrollp.setLocation(22, 101);
+		scrollp.setSize(405, 200);
+		scrollp.setLocation(12, 101);
+		
+		//pinchar etiqueta de columna --> ordenar
+		
+		TableRowSorter <DefaultTableModel> ordenarFilas = new TableRowSorter<DefaultTableModel>(model);
+		table.setRowSorter(ordenarFilas);
 		
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);		
 		
@@ -222,7 +277,7 @@ public class PanelRopa extends JPanel implements ActionListener {
 			            fecha = df.format(fechaDate);
 						
 									
-						BaseDeDatos.insertarPedido(codigoSeleccion, nombreusuario, fecha);
+						BaseDeDatos.insertarPedido(codigoSeleccion, fecha, nombreusuario);
 				
 						}
 				
